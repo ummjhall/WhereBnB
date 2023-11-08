@@ -1,2 +1,0 @@
-# WhereBnB
-AirBnB clone
