@@ -2,7 +2,9 @@
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+![db-schema]
+
+[db-schema]: ./images/schema.png
 
 ## API Documentation
 
@@ -50,7 +52,7 @@ Returns the information about the current user that is logged in.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/:userId/profile
+  * URL: /api/profile
   * Body: none
 
 * Successful Response when there is a logged in user
@@ -90,8 +92,8 @@ information.
 
 * Require Authentication: false
 * Request
-  * Method: ?
-  * URL: ?
+  * Method: POST
+  * URL: /api/login
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -156,8 +158,8 @@ user's information.
 
 * Require Authentication: false
 * Request
-  * Method: ?
-  * URL: ?
+  * Method: POST
+  * URL: /api/signup
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -287,7 +289,7 @@ Returns all the spots owned (created) by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/:userId/spots
+  * URL: /api/profile/spots
   * Body: none
 
 * Successful Response
@@ -327,7 +329,7 @@ Returns the details of a spot specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /api/:spotId/details
+  * URL: /api/spots/:spotId
   * Body: none
 
 * Successful Response
@@ -466,7 +468,7 @@ Create and return a new image for a spot specified by id.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: POST
-  * URL: /api/:spotId/images
+  * URL: /api/spots/:spotId/images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -512,7 +514,7 @@ Updates and returns an existing spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: PUT
-  * URL: /api/:spotId
+  * URL: /api/spots/:spotId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -598,7 +600,7 @@ Deletes an existing spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /api/:spotId
+  * URL: /api/spots/:spotId
   * Body: none
 
 * Successful Response
@@ -634,7 +636,7 @@ Returns all the reviews written by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/:userId/reviews
+  * URL: /api/profile/reviews
   * Body: none
 
 * Successful Response
@@ -690,7 +692,7 @@ Returns all the reviews that belong to a spot specified by id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /api/:spotId/reviews
+  * URL: /api/spots/:spotId/reviews
   * Body: none
 
 * Successful Response
@@ -745,7 +747,7 @@ Create and return a new review for a spot specified by id.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: /api/:spotId/reviews
+  * URL: /api/spots/:spotId/reviews
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -823,7 +825,7 @@ Create and return a new image for a review specified by id.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: POST
-  * URL: /api/:reviewId/images
+  * URL: /api/reviews/:reviewId/images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -880,7 +882,7 @@ Update and return an existing review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: PUT
-  * URL: /api/:reviewId
+  * URL: /api/reviews/:reviewId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -946,7 +948,7 @@ Delete an existing review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /api/:reviewId
+  * URL: /api/reviews/:reviewId
   * Body: none
 
 * Successful Response
@@ -982,7 +984,7 @@ Return all the bookings that the current user has made.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/:userId/bookings
+  * URL: /api/profile/bookings
   * Body: none
 
 * Successful Response
@@ -1027,7 +1029,7 @@ Return all the bookings for a spot specified by id.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/:spotId/bookings
+  * URL: /api/spots/:spotId/bookings
   * Body: none
 
 * Successful Response: If you ARE NOT the owner of the spot.
@@ -1087,7 +1089,7 @@ Return all the bookings for a spot specified by id.
     }
     ```
 
-### Create a Booking from a Spot based on the Spot's id
+### Create a Booking for a Spot based on the Spot's id
 
 Create and return a new booking from a spot specified by id.
 
@@ -1095,7 +1097,7 @@ Create and return a new booking from a spot specified by id.
 * Require proper authorization: Spot must NOT belong to the current user
 * Request
   * Method: POST
-  * URL: /api/:spotId/booking
+  * URL: /api/spots/:spotId/bookings
   * Body:
 
     ```json
@@ -1174,7 +1176,7 @@ Update and return an existing booking.
 * Require proper authorization: Booking must belong to the current user
 * Request
   * Method: PUT
-  * URL: /api/:bookingId
+  * URL: /api/bookings/:bookingId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1268,7 +1270,7 @@ Delete an existing booking.
   Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /api/:bookingId
+  * URL: /api/bookings/:bookingId
   * Body: none
 
 * Successful Response
@@ -1317,7 +1319,7 @@ Delete an existing image for a Spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /api/:spotId/images/:imageId
+  * URL: /api/images/:imageId
   * Body: none
 
 * Successful Response
@@ -1351,8 +1353,8 @@ Delete an existing image for a Review.
 * Require Authentication: true
 * Require proper authorization: Review must belong to the current user
 * Request
-  * Method: ?
-  * URL: ?
+  * Method: DELETE
+  * URL: /api/images/:imageId
   * Body: none
 
 * Successful Response
