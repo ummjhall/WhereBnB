@@ -5,12 +5,9 @@ const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
-
 const { ValidationError } = require('sequelize');
-
 const { environment } = require('./config');
 const isProduction = environment === 'production';
-
 const app = express();
 const routes = require('./routes');
 
@@ -19,19 +16,16 @@ app.use(cookieParser());
 app.use(express.json());
 
 /* --- Security Middleware --- */
-// enable cors only in development
+// Enable cors only in development
 if (!isProduction) app.use(cors());
-// helmet helps set a variety of headers to better secure your app
+// Helmet helps set a variety of headers to better secure your app
 app.use(helmet.crossOriginResourcePolicy({policy: "cross-origin"}));
 // Set the _csrf token and create req.csrfToken method
 app.use(csurf({cookie: {secure: isProduction, sameSite: isProduction && "Lax", httpOnly: true}}));
 
 app.use(routes);
 
-
-
-
-
+/* --- Error handling --- */
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
   err.title = "Resource Not Found";
@@ -39,7 +33,6 @@ app.use((_req, _res, next) => {
   err.status = 404;
   next(err);
 });
-
 // Process sequelize errors
 app.use((err, _req, _res, next) => {
   if (err instanceof ValidationError) {
@@ -52,7 +45,6 @@ app.use((err, _req, _res, next) => {
   }
   next(err);
 });
-
 // Error formatter
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);

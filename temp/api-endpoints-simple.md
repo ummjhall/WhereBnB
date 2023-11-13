@@ -2,9 +2,11 @@
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+![db-schema]
 
-## API Documentation
+[db-schema]: ../images/schema.png
+
+## API Documentation (Simplified)
 
 ## USERS
 
