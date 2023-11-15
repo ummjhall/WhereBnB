@@ -1,7 +1,8 @@
 const router = require('express').Router();
+const { restoreUser } = require('../../utils/auth.js');
 
-router.post('/test', (req, res) => {
-  res.json({requestBody: req.body});
-});
+// If current user session is valid, set req.user to the user in the database
+// Otherwise set req.user to null
+router.use(restoreUser);
 
 module.exports = router;
