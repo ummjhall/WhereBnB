@@ -1,0 +1,65 @@
+Table users {
+  id integer [pk]
+  firstName varchar
+  lastName varchar
+  email varchar
+  username varchar
+  password varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table spots {
+  id integer [pk]
+  ownerId integer
+  address varchar
+  city varchar
+  state varchar
+  country varchar
+  lat decimal
+  lng decimal
+  name varchar
+  description varchar
+  price integer
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table reviews {
+  id integer [pk]
+  userId integer
+  spotId integer
+  review varchar
+  stars integer
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table images {
+  id integer [pk]
+  url varchar
+  imageableId varchar
+  imageableType varchar
+  preview boolean
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table bookings {
+  id integer [pk]
+  spotId integer
+  userId integer
+  startDate date
+  endDate date
+  created_at timestamp
+  updated_at timestamp
+}
+
+
+Ref: "spots"."id" < "images"."imageableId"
+Ref: "users"."id" < "spots"."id"
+Ref: "users"."id" < "reviews"."id"
+Ref: "spots"."id" < "reviews"."id"
+Ref: "reviews"."id" < "images"."imageableId"
+Ref: "spots"."id" < "bookings"."id"
+Ref: "users"."id" < "bookings"."id"
