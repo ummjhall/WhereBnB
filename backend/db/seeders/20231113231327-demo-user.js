@@ -12,25 +12,25 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await User.bulkCreate([
       {
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'demo@user.io',
-        username: 'Demo-lition',
-        hashedPassword: bcrypt.hashSync('password')
+        firstName: 'Peter',
+        lastName: 'Parker',
+        username: 'Spider-Man',
+        hashedPassword: bcrypt.hashSync('spideysense'),
+        email: 'spiderman@gmail.com'
       },
       {
-        firstName: 'Jane',
-        lastName: 'Doe',
-        email: 'user1@user.io',
-        username: 'FakeUser1',
-        hashedPassword: bcrypt.hashSync('password2')
+        firstName: 'Tony',
+        lastName: 'Stark',
+        username: 'IronMan',
+        hashedPassword: bcrypt.hashSync('realmanofsteel'),
+        email: 'ironman@gmail.com'
       },
       {
-        firstName: 'Michael',
-        lastName: 'Doe',
-        email: 'user2@user.io',
-        username: 'FakeUser2',
-        hashedPassword: bcrypt.hashSync('password3')
+        firstName: 'Steve',
+        lastName: 'Rogers',
+        username: 'CaptainAmerica',
+        hashedPassword: bcrypt.hashSync('icoulddothisallday'),
+        email: 'captainamerica@gmail.com'
       }
     ], { validate: true });
   },
@@ -38,7 +38,7 @@ module.exports = {
     options.tableName = 'Users';
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
+      username: { [Op.in]: ['Spider-Man', 'IronMan', 'CaptainAmerica'] }
     }, {});
   }
 };
