@@ -14,17 +14,32 @@ module.exports = {
     await SpotImage.bulkCreate([
       {
         spotId: 1,
-        url: 'url1',
+        url: 'spotimageurl1',
         preview: false
       },
       {
-        spotId: 2,
-        url: 'url2',
+        spotId: 1,
+        url: 'spotimageurl2',
         preview: true
       },
       {
+        spotId: 2,
+        url: 'spotimageurl3',
+        preview: true
+      },
+      {
+        spotId: 2,
+        url: 'spotimageurl4',
+        preview: false
+      },
+      {
         spotId: 3,
-        url: 'url3',
+        url: 'spotimageurl5',
+        preview: false
+      },
+      {
+        spotId: 3,
+        url: 'spotimageurl6',
         preview: false
       }
     ], {validate: true});
@@ -33,7 +48,7 @@ module.exports = {
     options.tableName = 'SpotImages';
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete(options, {
-      id: {[Op.in]: [1, 2, 3]}
+      id: {[Op.in]: [1, 2, 3, 4, 5, 6]}
     }, {});
   }
 };
