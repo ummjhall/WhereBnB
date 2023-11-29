@@ -9,49 +9,35 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('SpotImages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
-        allowNull: false,
+      spotId: {
+        type: Sequelize.INTEGER
+      },
+      url: {
         type: Sequelize.STRING
       },
-      lastName: {
+      preview: {
         allowNull: false,
-        type: Sequelize.STRING
-      },
-      username: {
-        allowNull: false,
-        type: Sequelize.STRING(30),
-        unique: true
-      },
-      hashedPassword: {
-        allowNull: false,
-        type: Sequelize.STRING.BINARY
-      },
-      email: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        unique: true
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         type: Sequelize.DATE
       }
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = 'Users';
+    options.tableName = 'SpotImages';
     await queryInterface.dropTable(options);
   }
 };

@@ -9,49 +9,39 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Bookings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
-        allowNull: false,
-        type: Sequelize.STRING
+      spotId: {
+        type: Sequelize.INTEGER
       },
-      lastName: {
-        allowNull: false,
-        type: Sequelize.STRING
+      userId: {
+        type: Sequelize.INTEGER
       },
-      username: {
+      startDate: {
         allowNull: false,
-        type: Sequelize.STRING(30),
-        unique: true
+        type: Sequelize.DATE
       },
-      hashedPassword: {
+      endDate: {
         allowNull: false,
-        type: Sequelize.STRING.BINARY
-      },
-      email: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        unique: true
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         type: Sequelize.DATE
       }
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = 'Users';
+    options.tableName = 'Bookings';
     await queryInterface.dropTable(options);
   }
 };
