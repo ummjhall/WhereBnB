@@ -32,7 +32,7 @@ module.exports = {
         hashedPassword: bcrypt.hashSync('icoulddothisallday'),
         email: 'captainamerica@gmail.com'
       }
-    ], { validate: true });
+    ], {validate: true});
   },
   async down (queryInterface, Sequelize) {
     options.tableName = 'Users';
