@@ -1,5 +1,5 @@
 const express = require('express');
-const { Spot, SpotImage, Review } = require('../../db/models');
+const { Spot, SpotImage, Review, User } = require('../../db/models');
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
@@ -21,6 +21,30 @@ router.get('/', async (req, res, next) => {
   });
 
   res.json(spots);
+});
+
+router.get('/:spotId', async (req, res, next) => {
+  let spot = await Spot.findOne({
+    where: {id: req.params.spotId},
+    include: [
+      {model: Review},
+      {model: SpotImage},
+      {model: User, as: 'Owner', attributes: ['id', 'firstName', 'lastName']}
+    ]
+  });
+
+  if (!spot) {
+    return res.status(404).json({message: "Spot couldn't be found"});
+  }
+
+  spot = spot.toJSON();
+
+  spot.numReviews = spot.Reviews.length;
+  const totalStars = spot.Reviews.reduce((sum, review) => sum + review.stars, 0);
+  spot.avgStarRating = totalStars / spot.numReviews;
+  delete spot.Reviews;
+
+  res.json(spot);
 });
 
 module.exports = router;
