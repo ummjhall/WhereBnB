@@ -5,6 +5,20 @@ const { Model, Validator } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
+      User.hasMany(models.Spot, {
+        foreignKey: 'ownerId',
+        onDelete: 'CASCADE'
+      });
+      User.belongsToMany(models.Spot, {
+        through: models.Booking,
+        foreignKey: 'userId',
+        otherKey: 'spotId',
+        onDelete: 'CASCADE'
+      });
+      User.hasMany(models.Review, {
+        foreignKey: 'userId',
+        onDelete: 'CASCADE'
+      });
     }
   }
   User.init({
@@ -15,15 +29,6 @@ module.exports = (sequelize, DataTypes) => {
     lastName: {
       allowNull: false,
       type: DataTypes.STRING
-    },
-    email: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      unique: true,
-      validate: {
-        len: [3,256],
-        isEmail: true
-      }
     },
     username: {
       allowNull: false,
@@ -43,6 +48,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING.BINARY,
       validate: {
         len: [60,60]
+      }
+    },
+    email: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      unique: true,
+      validate: {
+        len: [3,256],
+        isEmail: true
       }
     }
   }, {
