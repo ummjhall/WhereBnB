@@ -11,32 +11,22 @@ const validateLogin = [
   check('credential')
     .exists({checkFalsy: true})
     .notEmpty()
-    .withMessage('Please provide a valid username or email.'),
+    .withMessage('Email or username is required'),
   check('password')
     .exists({checkFalsy: true})
-    .withMessage('Please provide a password.'),
+    .withMessage('Password is required'),
   handleValidationErrors
 ];
 
 // Log in
 router.post('/', validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
-
   const user = await User.unscoped().findOne({
-    where: {
-      [Op.or]: {
-        username: credential,
-        email: credential
-      }
-    }
+    where: {[Op.or]: {username: credential, email: credential}}
   });
 
   if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-    const err = new Error('Login failed');
-    err.status = 401;
-    err.title = 'Login failed';
-    err.errors = {credential: 'The provided credentials were invalid.'};
-    return next(err);
+    return res.status(401).json({message: 'Invalid credentials'});
   }
 
   const safeUser = {
@@ -47,7 +37,8 @@ router.post('/', validateLogin, async (req, res, next) => {
     username: user.username,
   };
 
-  await setTokenCookie(res, safeUser);
+  // await setTokenCookie(res, safeUser);
+  setTokenCookie(res, safeUser);
 
   return res.json({user: safeUser});
 });
@@ -58,7 +49,7 @@ router.delete('/', (_req, res) => {
   return res.json({ message: 'success' });
 });
 
-// Restore session user
+// Get current user/Restore session user
 router.get('/', (req, res) => {
   const { user } = req;
   if (user) {
