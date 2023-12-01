@@ -18,7 +18,7 @@ const validateLogin = [
   handleValidationErrors
 ];
 
-// Log in
+// Log In a User
 router.post('/', validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
   const user = await User.unscoped().findOne({
@@ -37,19 +37,18 @@ router.post('/', validateLogin, async (req, res, next) => {
     username: user.username,
   };
 
-  // await setTokenCookie(res, safeUser);
   setTokenCookie(res, safeUser);
 
   return res.json({user: safeUser});
 });
 
-// Log out
+// Log Out a User
 router.delete('/', (_req, res) => {
   res.clearCookie('token');
   return res.json({ message: 'success' });
 });
 
-// Get current user/Restore session user
+// Get Current User
 router.get('/', (req, res) => {
   const { user } = req;
   if (!user) return res.json({ user: null });

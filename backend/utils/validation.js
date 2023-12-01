@@ -14,6 +14,13 @@ const handleValidationErrors = (req, _res, next) => {
     err.errors = errors;
     err.status = 400;
     err.title = "Bad Request";
+
+    if ((err.errors.email && err.errors.email.includes('already exists')) ||
+        (err.errors.username && err.errors.username.includes('already exists'))) {
+      err.message = 'User already exists';
+      err.status = 500;
+    }
+
     next(err);
   }
 
