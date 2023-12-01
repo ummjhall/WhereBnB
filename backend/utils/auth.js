@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { jwtConfig } = require('../config');
-const { User } = require('../db/models');
+const { User, Spot } = require('../db/models');
 const { secret, expiresIn } = jwtConfig;
 
 // Send a JWT Cookie
@@ -68,4 +68,13 @@ const requireAuth = function (req, _res, next) {
   return next(err);
 }
 
-module.exports = { setTokenCookie, restoreUser, requireAuth };
+const isAuthorized = async function (spotId, req, res) {
+  const { id } = req.user;
+  const spot = await Spot.findOne(
+    {where: {id: spotId}, include: [{model: User, as: 'Owner', attributes: ['id']}]
+  });
+
+  return (id == spot.Owner.id)
+}
+
+module.exports = { setTokenCookie, restoreUser, requireAuth, isAuthorized };

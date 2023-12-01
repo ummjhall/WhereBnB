@@ -1,6 +1,6 @@
 const express = require('express');
 const { Spot, SpotImage, Review, User } = require('../../db/models');
-const { requireAuth } = require('../../utils/auth');
+const { requireAuth, isAuthorized } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
@@ -46,7 +46,7 @@ router.get('/:spotId', async (req, res, next) => {
   res.json(spot);
 });
 
-const validateSpotCreation = [
+const validateSpot = [
   check('address')
     .exists({checkFalsy: true})
     .notEmpty()
@@ -91,7 +91,7 @@ const validateSpotCreation = [
 ];
 
 // Create a Spot
-router.post('/', requireAuth, validateSpotCreation, async (req, res, next) => {
+router.post('/', requireAuth, validateSpot, async (req, res, next) => {
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
   const newSpot = await Spot.create({ownerId: req.user.id, address, city, state, country, lat, lng, name, description, price});
   res.status(201).json(newSpot);
@@ -99,17 +99,12 @@ router.post('/', requireAuth, validateSpotCreation, async (req, res, next) => {
 
 // Add an Image to a Spot based on the Spot's id
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
-  const { id } = req.user;
-  const { spotId } = req.params;
-  const spot = await Spot.findOne(
-    {where: {id: spotId}, include: [{model: User, as: 'Owner', attributes: ['id']}]
-  });
-
+  const spotId = req.params.spotId;
+  const spot = await Spot.findByPk(spotId);
   if (!spot) {
     return res.status(404).json({message: "Spot couldn't be found"});
   }
-
-  if (id != spot.Owner.id) {
+  if (!await isAuthorized(spotId, req, res)) {
     return res.status(403).json({message: 'Forbidden'});
   }
 
@@ -121,6 +116,22 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     url: newSpotImage.url,
     preview: newSpotImage.preview
   });
+});
+
+// Edit a Spot
+router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
+  const spotId = req.params.spotId;
+  const spot = await Spot.findByPk(spotId);
+  if (!spot) {
+    return res.status(404).json({message: "Spot couldn't be found"});
+  }
+  if (!await isAuthorized(spotId, req, res)) {
+    return res.status(403).json({message: 'Forbidden'});
+  }
+
+  spot.update(req.body);
+
+  res.json(spot);
 });
 
 // Utility function
