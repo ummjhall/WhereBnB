@@ -6,22 +6,7 @@ const router = express.Router();
 // Get all Spots
 router.get('/', async (req, res, next) => {
   let spots = await Spot.findAll({include: [{model: SpotImage}, {model: Review}]});
-  spots = {Spots: JSON.parse(JSON.stringify(spots))};
-
-  spots.Spots.forEach(spot => {
-    const totalStars = spot.Reviews.reduce((sum, review) => {
-      return sum + review.stars;
-    }, 0);
-    spot.avgRating = totalStars / spot.Reviews.length;
-    delete spot.Reviews;
-
-    spot.SpotImages.forEach(spotImage => {
-      if (spotImage.preview === true) spot.previewImage = spotImage.url;
-    });
-    if (!spot.previewImage) spot.previewImage = 'No preview image';
-    delete spot.SpotImages;
-  });
-
+  spots = formatSpots(spots);
   res.json(spots);
 });
 
@@ -31,9 +16,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     where: {ownerId: req.user.id},
     include: [{model: SpotImage}, {model: Review}]
   });
-
   ownedSpots = formatSpots(ownedSpots);
-
   res.json(ownedSpots);
 });
 
@@ -53,7 +36,6 @@ router.get('/:spotId', async (req, res, next) => {
   }
 
   spot = spot.toJSON();
-
   spot.numReviews = spot.Reviews.length;
   const totalStars = spot.Reviews.reduce((sum, review) => sum + review.stars, 0);
   spot.avgStarRating = totalStars / spot.numReviews;
