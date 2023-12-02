@@ -8,7 +8,7 @@ const router = express.Router();
 // Get all Reviews of the Current User
 router.get('/current', requireAuth, async (req, res) => {
   const ownedReviews = [];
-  let reviews = await Review.findAll({
+  await Review.findAll({
     where: {userId: req.user.id},
     include: [
       {model: User},
@@ -38,6 +38,23 @@ router.get('/current', requireAuth, async (req, res) => {
   });
 
   res.json({Reviews: ownedReviews});
+});
+
+// Add an Image to a Review based on the Review's id
+router.post('/:reviewId/images', requireAuth, authorize, async (req, res) => {
+  if (!req.review) {
+    return res.status(404).json({message: "Review couldn't be found"});
+  }
+
+  const reviewImages = await req.review.getReviewImages();
+  if (reviewImages.length >= 10) {
+    return res.status(403).json({"message": "Maximum number of images for this resource was reached"});
+  }
+
+  const newReviewImage = await req.review.createReviewImage({url: req.body.url})
+    .then(image => image.toJSON());
+
+  res.json({id: newReviewImage.id, url: newReviewImage.url});
 });
 
 module.exports = router;
