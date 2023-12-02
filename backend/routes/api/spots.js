@@ -113,6 +113,10 @@ function formatSpots(spots) {
   spots = {Spots: JSON.parse(JSON.stringify(spots))};
 
   spots.Spots.forEach(spot => {
+    spot.lat = Number(spot.lat);
+    spot.lng = Number(spot.lng);
+    spot.price = Number(spot.price);
+
     const totalStars = spot.Reviews.reduce((sum, review) => {
       return sum + review.stars;
     }, 0);
