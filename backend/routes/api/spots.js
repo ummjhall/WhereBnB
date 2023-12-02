@@ -38,6 +38,9 @@ router.get('/:spotId', async (req, res) => {
   }
 
   spot = spot.toJSON();
+  spot.lat = Number(spot.lat);
+  spot.lng = Number(spot.lng);
+  spot.price = Number(spot.price);
   spot.numReviews = spot.Reviews.length;
   const totalStars = spot.Reviews.reduce((sum, review) => sum + review.stars, 0);
   spot.avgStarRating = totalStars / spot.numReviews;
