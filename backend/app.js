@@ -59,6 +59,8 @@ app.use((err, _req, res, _next) => {
 
   if (isProduction)
     delete errorResponse.stack;
+  if (errorResponse.message === 'Authentication required')
+    delete errorResponse.errors;
   if (errorResponse.message === 'Forbidden')
     delete errorResponse.errors;
 
