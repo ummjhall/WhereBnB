@@ -8,27 +8,47 @@ const router = express.Router();
 
 const validateSignup = [
   check('email')
-    .exists({ checkFalsy: true })
+    .custom(async value => {
+      const existingUser = await User.findOne({where: {email: value}});
+      if (existingUser) {
+        throw new Error('User with that email already exists');
+      }
+    })
+    .exists({checkFalsy: true})
     .isEmail()
-    .withMessage('Please provide a valid email.'),
+    .withMessage('Invalid email'),
   check('username')
-    .exists({ checkFalsy: true })
-    .isLength({ min: 4 })
+    .custom(async value => {
+      const existingUser = await User.findOne({where: {username: value}});
+      if (existingUser) {
+        throw new Error('User with that username already exists');
+      }
+    })
+    .isLength({min: 4})
     .withMessage('Please provide a username with at least 4 characters.'),
+  check('username')
+    .exists({checkFalsy: true})
+    .withMessage('Username is required'),
   check('username')
     .not()
     .isEmail()
     .withMessage('Username cannot be an email.'),
+  check('firstName')
+    .exists({checkFalsy: true})
+    .withMessage('First Name is required'),
+  check('lastName')
+    .exists({checkFalsy: true})
+    .withMessage('Last Name is required'),
   check('password')
-    .exists({ checkFalsy: true })
-    .isLength({ min: 6 })
+    .exists({checkFalsy: true})
+    .isLength({min: 6})
     .withMessage('Password must be 6 characters or more.'),
   handleValidationErrors
 ];
 
-// Sign up
+// Sign Up a User
 router.post('/', validateSignup, async (req, res) => {
-  const { firstName, lastName, email, password, username } = req.body;
+  const { firstName, lastName, email, username, password} = req.body;
   const hashedPassword = bcrypt.hashSync(password);
   const newUser = await User.create({firstName, lastName, email, username, hashedPassword});
 
@@ -40,7 +60,7 @@ router.post('/', validateSignup, async (req, res) => {
     username: newUser.username,
   };
 
-  await setTokenCookie(res, safeUser);
+  setTokenCookie(res, safeUser);
 
   return res.json({user: safeUser});
 });

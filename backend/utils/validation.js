@@ -10,14 +10,21 @@ const handleValidationErrors = (req, _res, next) => {
       .array()
       .forEach(error => errors[error.path] = error.msg);
 
-    const err = Error("Bad request.");
+    const err = Error("Bad Request");
     err.errors = errors;
     err.status = 400;
-    err.title = "Bad request.";
+    err.title = "Bad Request";
+
+    if ((err.errors.email && err.errors.email.includes('already exists')) ||
+        (err.errors.username && err.errors.username.includes('already exists'))) {
+      err.message = 'User already exists';
+      err.status = 500;
+    }
+
     next(err);
   }
 
   next();
 };
 
-module.exports = {handleValidationErrors};
+module.exports = { handleValidationErrors };

@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     static associate(models) {
       Spot.belongsTo(models.User, {
+        as: 'Owner',
         foreignKey: 'ownerId'
       });
       Spot.hasMany(models.Review, {
