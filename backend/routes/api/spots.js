@@ -91,14 +91,25 @@ router.post('/:spotId/images', requireAuth, authorize, async (req, res) => {
   });
 });
 
-// Edit a Spot
-router.put('/:spotId', requireAuth, authorize, validateSpot, async (req, res) => {
-  let spot = await Spot.findByPk(req.params.spotId);
-  if (!spot) {
-    return res.status(404).json({message: "Spot couldn't be found"});
-  }
+const validateSpotEdit = [
+  check('address').optional().notEmpty().withMessage('Street address is required'),
+  check('city').optional().notEmpty().withMessage('City is required'),
+  check('state').optional().notEmpty().withMessage('State is required'),
+  check('country').optional().notEmpty().withMessage('Country is required'),
+  check('lat').optional().notEmpty().isFloat({min: -90, max: 90}).withMessage('Latitude must be within -90 and 90'),
+  check('lng').optional().notEmpty().isFloat({min: -180, max: 180}).withMessage('Longitude must be within -180 and 180'),
+  check('name').optional().notEmpty().isLength({max: 50}).withMessage('Name must be less than 50 characters'),
+  check('description').optional().notEmpty().withMessage('Description is required'),
+  check('price').optional().notEmpty().isFloat({min: 0}).withMessage('Price per day must be a positive number'),
+  handleValidationErrors
+];
 
-  spot.update(req.body);
+// Edit a Spot
+router.put('/:spotId', requireAuth, validateSpotEdit, authorize, async (req, res) => {
+  let spot = await Spot.findByPk(req.params.spotId);
+  if (!spot) return res.status(404).json({message: "Spot couldn't be found"});
+
+  await spot.update(req.body);
   spot = spot.toJSON();
   spot.lat = Number(spot.lat);
   spot.lng = Number(spot.lng);
