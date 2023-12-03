@@ -25,6 +25,9 @@ router.get('/current', requireAuth, async (req, res) => {
 
   // Format response
   ownedReviews.forEach(review => {
+    review.Spot.lat = Number(review.Spot.lat);
+    review.Spot.lng = Number(review.Spot.lng);
+    review.Spot.price = Number(review.Spot.price);
     review.Spot.SpotImages.forEach(spotImage => {
       if (spotImage.preview === true) {
        review.Spot.previewImage = spotImage.url;
