@@ -23,17 +23,16 @@ router.get('/current', requireAuth, async (req, res) => {
     });
   });
 
+  // Format response
   ownedReviews.forEach(review => {
     review.Spot.SpotImages.forEach(spotImage => {
       if (spotImage.preview === true) {
        review.Spot.previewImage = spotImage.url;
       }
     });
-
     if (!review.Spot.previewImage) {
       review.Spot.previewImage = 'No preview image';
     }
-
     delete review.Spot.SpotImages;
   });
 
@@ -42,19 +41,31 @@ router.get('/current', requireAuth, async (req, res) => {
 
 // Add an Image to a Review based on the Review's id
 router.post('/:reviewId/images', requireAuth, authorize, async (req, res) => {
-  if (!req.review) {
-    return res.status(404).json({message: "Review couldn't be found"});
-  }
+  const { review } = req;
+  if (!review) return res.status(404).json({message: "Review couldn't be found"});
 
-  const reviewImages = await req.review.getReviewImages();
+  const reviewImages = await review.getReviewImages();
   if (reviewImages.length >= 10) {
     return res.status(403).json({"message": "Maximum number of images for this resource was reached"});
   }
 
   const newReviewImage = await req.review.createReviewImage({url: req.body.url})
     .then(image => image.toJSON());
-
   res.json({id: newReviewImage.id, url: newReviewImage.url});
+});
+
+const validateReview = [
+  check('review').notEmpty().withMessage('Review text is required'),
+  check('stars').notEmpty().isInt({min: 1, max: 5}).withMessage('Stars must be an integer from 1 to 5'),
+  handleValidationErrors
+]
+
+// Edit a Review
+router.put('/:reviewId', requireAuth, validateReview, authorize, async (req, res) => {
+  const { review } = req;
+  if (!review) return res.status(404).json({message: "Review couldn't be found"});
+  await review.update({review: req.body.review, stars: req.body.stars});
+  res.json(review);
 });
 
 module.exports = router;
