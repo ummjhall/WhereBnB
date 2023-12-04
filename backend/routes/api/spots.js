@@ -65,7 +65,11 @@ const validateSpot = [
 // Create a Spot
 router.post('/', requireAuth, validateSpot, async (req, res) => {
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
-  const newSpot = await Spot.create({ownerId: req.user.id, address, city, state, country, lat, lng, name, description, price});
+  let newSpot = await Spot.create({ownerId: req.user.id, address, city, state, country, lat, lng, name, description, price});
+  newSpot = newSpot.toJSON();
+  newSpot.lat = Number(newSpot.lat);
+  newSpot.lng = Number(newSpot.lng);
+  newSpot.price = Number(newSpot.price);
   res.status(201).json(newSpot);
 });
 
@@ -89,12 +93,16 @@ router.post('/:spotId/images', requireAuth, authorize, async (req, res) => {
 
 // Edit a Spot
 router.put('/:spotId', requireAuth, authorize, validateSpot, async (req, res) => {
-  const spot = await Spot.findByPk(req.params.spotId);
+  let spot = await Spot.findByPk(req.params.spotId);
   if (!spot) {
     return res.status(404).json({message: "Spot couldn't be found"});
   }
 
   spot.update(req.body);
+  spot = spot.toJSON();
+  spot.lat = Number(spot.lat);
+  spot.lng = Number(spot.lng);
+  spot.price = Number(spot.price);
 
   res.json(spot);
 });
