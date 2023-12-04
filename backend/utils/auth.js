@@ -63,18 +63,29 @@ const requireAuth = function (req, _res, next) {
 
   const err = new Error('Authentication required');
   err.title = 'Authentication required';
-  err.errors = { message: 'Authentication required' };
+  err.errors = {message: 'Authentication required'};
   err.status = 401;
   return next(err);
 }
 
-const isAuthorized = async function (spotId, req, res) {
+const authorize = function (req, _res, next) {
+  if (req.params.spotId) authorizeSpot(req, next);
+}
+
+const authorizeSpot = async function (req, next) {
   const { id } = req.user;
+  const { spotId } = req.params;
   const spot = await Spot.findOne(
     {where: {id: spotId}, include: [{model: User, as: 'Owner', attributes: ['id']}]
   });
+  if (!spot) return next();
 
-  return (id == spot.Owner.id)
+  if (id == spot.Owner.id) return next();
+
+  const err = new Error('Forbidden');
+  err.errors = {message: 'Forbidden'}
+  err.status = 403;
+  return next(err);
 }
 
-module.exports = { setTokenCookie, restoreUser, requireAuth, isAuthorized };
+module.exports = { setTokenCookie, restoreUser, requireAuth, authorize };
