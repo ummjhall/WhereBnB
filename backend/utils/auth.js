@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { jwtConfig } = require('../config');
-const { User, Spot } = require('../db/models');
+const { User, Spot, Review } = require('../db/models');
 const { secret, expiresIn } = jwtConfig;
 
 // Send a JWT Cookie
@@ -70,6 +70,7 @@ const requireAuth = function (req, _res, next) {
 
 const authorize = function (req, _res, next) {
   if (req.params.spotId) authorizeSpot(req, next);
+  if (req.params.reviewId) authorizeReview(req, next);
 }
 
 const authorizeSpot = async function (req, next) {
@@ -81,6 +82,17 @@ const authorizeSpot = async function (req, next) {
   if (!spot) return next();
 
   if (id == spot.Owner.id) return next();
+
+  const err = new Error('Forbidden');
+  err.errors = {message: 'Forbidden'}
+  err.status = 403;
+  return next(err);
+}
+
+const authorizeReview = async function (req, next) {
+  const {id } = req.user;
+  req.review = await Review.findByPk(req.params.reviewId);
+  if (!req.review || id == req.review.userId) return next();
 
   const err = new Error('Forbidden');
   err.errors = {message: 'Forbidden'}
