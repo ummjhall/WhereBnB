@@ -35,6 +35,12 @@ module.exports = {
         userId: 1,    // Spider-Man
         startDate: '2023-09-06',
         endDate: '2023-09-10'
+      },
+      {
+        spotId: 1,    // Aunt May's House
+        userId: 3,    // Captain America
+        startDate: '2024-04-05',
+        endDate: '2024-04-08'
       }
     ], {validate: true});
   },
