@@ -63,6 +63,12 @@ app.use((err, _req, res, _next) => {
     delete errorResponse.errors;
   if (errorResponse.message === 'Forbidden')
     delete errorResponse.errors;
+  for (const key in errorResponse.errors) {
+    if (errorResponse.errors[key].includes('conflicts')) {
+      res.status(403);
+      errorResponse.message = 'Sorry, this spot is already booked for the specified dates';
+    }
+  }
 
   res.json(errorResponse);
 });

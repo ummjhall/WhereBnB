@@ -1,8 +1,9 @@
 const express = require('express');
-const { Spot, SpotImage, Review, User, ReviewImage } = require('../../db/models');
+const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require('../../db/models');
 const { requireAuth, authorize } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { Op } = require('sequelize');
 const router = express.Router();
 
 // Get all Spots
@@ -91,14 +92,25 @@ router.post('/:spotId/images', requireAuth, authorize, async (req, res) => {
   });
 });
 
-// Edit a Spot
-router.put('/:spotId', requireAuth, authorize, validateSpot, async (req, res) => {
-  let spot = await Spot.findByPk(req.params.spotId);
-  if (!spot) {
-    return res.status(404).json({message: "Spot couldn't be found"});
-  }
+const validateSpotEdit = [
+  check('address').optional().notEmpty().withMessage('Street address is required'),
+  check('city').optional().notEmpty().withMessage('City is required'),
+  check('state').optional().notEmpty().withMessage('State is required'),
+  check('country').optional().notEmpty().withMessage('Country is required'),
+  check('lat').optional().notEmpty().isFloat({min: -90, max: 90}).withMessage('Latitude must be within -90 and 90'),
+  check('lng').optional().notEmpty().isFloat({min: -180, max: 180}).withMessage('Longitude must be within -180 and 180'),
+  check('name').optional().notEmpty().isLength({max: 50}).withMessage('Name must be less than 50 characters'),
+  check('description').optional().notEmpty().withMessage('Description is required'),
+  check('price').optional().notEmpty().isFloat({min: 0}).withMessage('Price per day must be a positive number'),
+  handleValidationErrors
+];
 
-  spot.update(req.body);
+// Edit a Spot
+router.put('/:spotId', requireAuth, validateSpotEdit, authorize, async (req, res) => {
+  let spot = await Spot.findByPk(req.params.spotId);
+  if (!spot) return res.status(404).json({message: "Spot couldn't be found"});
+
+  await spot.update(req.body);
   spot = spot.toJSON();
   spot.lat = Number(spot.lat);
   spot.lng = Number(spot.lng);
@@ -143,9 +155,7 @@ const validateReview = [
 // Create a Review for a Spot based on the Spot's id
 router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
-  if (!spot) {
-    return res.status(404).json({message: "Spot couldn't be found"});
-  }
+  if (!spot) return res.status(404).json({message: "Spot couldn't be found"});
 
   await spot.getReviews().then(reviews => {
     reviews.forEach(review => {
@@ -163,6 +173,88 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
   });
 
   res.status(201).json(newReview);
+});
+
+// Get all Bookings for a Spot based on the Spot's id
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+  const spot = await Spot.findByPk(req.params.spotId);
+  if (!spot) return res.status(404).json({message: "Spot couldn't be found"});
+
+  const isOwner = req.user.id === spot.ownerId;
+  let bookings = [];
+
+  if (isOwner) {
+    bookings = await Booking.findAll({
+      attributes: {include: ['id']},
+      include: [
+        {model: User},
+        {model: Spot, where: {ownerId: req.user.id, id: req.params.spotId}, attributes: []}
+      ]
+    });
+  } else {
+    bookings = await Booking.findAll({
+      where: {userId: req.user.id, spotId: req.params.spotId},
+      attributes: ['spotId', 'startDate', 'endDate']
+    });
+  }
+
+  res.json({Bookings: bookings});
+});
+
+const validateBooking = [
+  check('startDate').isAfter(new Date().toString()).withMessage('startDate cannot be in the past'),
+  check('startDate').custom(async (value, { req }) => {
+    await Booking.findAll({where: {spotId: req.params.spotId}})
+      .then(res => {
+        res = JSON.parse(JSON.stringify(res));
+        res.forEach(booking => {
+          booking.startDate = booking.startDate.slice(0, 10);
+          booking.endDate = booking.endDate.slice(0, 10);
+          if ((booking.startDate <= value && booking.endDate >= value) ||
+            (value < booking.startDate && req.body.endDate > booking.endDate)) {
+            throw new Error('Start date conflicts with an existing booking');
+          }
+        });
+      });
+  }),
+  check('endDate').custom(async (value, { req }) => {
+    const startDate = new Date(req.body.startDate);
+    const endDate = new Date(value);
+    if (endDate <= startDate) {
+      throw new Error('endDate cannot be on or before startDate');
+    }
+  }),
+  check('endDate').custom(async (value, { req }) => {
+    await Booking.findAll({where: {spotId: req.params.spotId}})
+      .then(res => {
+        res = JSON.parse(JSON.stringify(res));
+        res.forEach(booking => {
+          booking.startDate = booking.startDate.slice(0, 10);
+          booking.endDate = booking.endDate.slice(0, 10);
+          if ((booking.startDate <= value && booking.endDate >= value) ||
+            (req.body.startDate < booking.startDate && value > booking.endDate)) {
+            throw new Error('End date conflicts with an existing booking');
+          }
+        });
+      });
+  }),
+  handleValidationErrors
+];
+
+// Create a Booking from a Spot based on the Spot's id
+router.post('/:spotId/bookings', requireAuth, validateBooking, authorize, async (req, res) => {
+  const { spot } = req;
+  if (!spot) return res.status(404).json({message: "Spot couldn't be found"});
+
+  const newBooking = await Booking.create({
+    spotId: req.params.spotId,
+    userId: req.user.id,
+    startDate: req.body.startDate,
+    endDate: req.body.endDate
+  });
+
+  console.log(newBooking);
+  res.json(newBooking);
 });
 
 // Utility function

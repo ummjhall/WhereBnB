@@ -13,12 +13,6 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await Booking.bulkCreate([
       {
-        spotId: 1,    // Aunt May's House
-        userId: 2,    // Iron Man
-        startDate: '2023-11-23',
-        endDate: '2023-11-24'
-      },
-      {
         spotId: 2,    // Stark Tower
         userId: 3,    // Captain America
         startDate: '2022-12-17',
@@ -35,6 +29,36 @@ module.exports = {
         userId: 1,    // Spider-Man
         startDate: '2023-09-06',
         endDate: '2023-09-10'
+      },
+      {
+        spotId: 1,    // Aunt May's House
+        userId: 2,    // Iron Man
+        startDate: '2023-11-23',
+        endDate: '2023-11-24'
+      },
+      {
+        spotId: 3,    // Cap's Apartment
+        userId: 1,    // Spider-Man
+        startDate: '2023-12-07',
+        endDate: '2023-12-14'
+      },
+      {
+        spotId: 1,    // Aunt May's House
+        userId: 3,    // Captain America
+        startDate: '2024-04-05',
+        endDate: '2024-04-08'
+      },
+      {
+        spotId: 2,    // Stark Tower
+        userId: 3,    // Captain America
+        startDate: '2024-09-06',
+        endDate: '2024-09-07'
+      },
+      {
+        spotId: 2,    // Stark Tower
+        userId: 1,    // Spider-Man
+        startDate: '2024-09-08',
+        endDate: '2024-09-11'
       }
     ], {validate: true});
   },
