@@ -94,7 +94,7 @@ router.put('/:bookingId', requireAuth, authorize, validateBookingEdit, async (re
     return res.status(403).json({"message": "Past bookings can't be modified"});
   }
 
-  booking.update(req.body);
+  await booking.update(req.body);
 
   res.json(booking);
 });
