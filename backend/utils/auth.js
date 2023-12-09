@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { jwtConfig } = require('../config');
-const { User, Spot, Review } = require('../db/models');
+const { User, Spot, Review, Booking } = require('../db/models');
+const { ResultWithContextImpl } = require('express-validator/src/chain');
 const { secret, expiresIn } = jwtConfig;
 
 // Send a JWT Cookie
@@ -71,6 +72,7 @@ const requireAuth = function (req, _res, next) {
 const authorize = function (req, _res, next) {
   if (req.params.spotId) authorizeSpot(req, next);
   if (req.params.reviewId) authorizeReview(req, next);
+  if (req.params.bookingId) authorizeBooking(req, next);
 }
 
 const authorizeSpot = async function (req, next) {
@@ -114,6 +116,21 @@ const authorizeCreateBooking = async function (req, next) {
     req.spot = spot;
     return next();
   }
+
+  const err = new Error('Forbidden');
+  err.errors = {message: 'Forbidden'}
+  err.status = 403;
+  return next(err);
+}
+
+const authorizeBooking = async function (req, next) {
+  const { id } = req.user;
+  const booking = await Booking.findByPk(req.params.bookingId);
+  req.booking = booking;
+  if (!booking) return next();
+
+  const isOwnBooking = id === booking.userId;
+  if (isOwnBooking) return next();
 
   const err = new Error('Forbidden');
   err.errors = {message: 'Forbidden'}

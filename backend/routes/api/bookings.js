@@ -41,4 +41,62 @@ router.get('/current', requireAuth, async (req, res) => {
   res.json({Bookings: ownedBookings});
 });
 
+const validateBookingEdit = [
+  check('startDate').isAfter(new Date().toString()).withMessage('startDate cannot be in the past'),
+  check('endDate').custom(async (value, { req }) => {
+    const startDate = new Date(req.body.startDate);
+    const endDate = new Date(value);
+    if (endDate <= startDate) {
+      throw new Error('endDate cannot be on or before startDate');
+    }
+  }),
+  check('startDate').custom(async (value, { req }) => {
+    if (!req.booking) return;
+    const spotId = await Booking.findByPk(req.params.bookingId).then(res => res.spotId);
+    let bookings = await Booking.findAll({where: {spotId}});
+    bookings = JSON.parse(JSON.stringify(bookings));
+    bookings.forEach(booking => {
+      if (booking.id != req.params.bookingId) {
+        booking.startDate = booking.startDate.slice(0, 10);
+        booking.endDate = booking.endDate.slice(0, 10);
+        if ((booking.startDate <= value && booking.endDate >= value) ||
+          (value < booking.startDate && req.body.endDate > booking.endDate)) {
+          throw new Error('Start date conflicts with an existing booking');
+        }
+      }
+    });
+  }),
+  check('endDate').custom(async (value, { req }) => {
+    if (!req.booking) return;
+    const spotId = await Booking.findByPk(req.params.bookingId).then(res => res.spotId);
+    let bookings = await Booking.findAll({where: {spotId}});
+    bookings = JSON.parse(JSON.stringify(bookings));
+    bookings.forEach(booking => {
+      if (booking.id != req.params.bookingId) {
+        booking.startDate = booking.startDate.slice(0, 10);
+        booking.endDate = booking.endDate.slice(0, 10);
+        if ((booking.startDate <= value && booking.endDate >= value) ||
+          (req.body.startDate < booking.startDate && value > booking.endDate)) {
+          throw new Error('End date conflicts with an existing booking');
+        }
+      }
+    });
+  }),
+  handleValidationErrors
+];
+
+// Edit a Booking
+router.put('/:bookingId', requireAuth, authorize, validateBookingEdit, async (req, res) => {
+  const { booking } = req;
+  if (!booking) return res.status(404).json({message: "Booking couldn't be found"});
+
+  if (new Date(booking.endDate) < new Date()) {
+    res.status(403).json({"message": "Past bookings can't be modified"});
+  }
+
+  booking.update(req.body);
+
+  res.json(booking);
+});
+
 module.exports = router;
