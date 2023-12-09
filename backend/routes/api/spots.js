@@ -253,7 +253,6 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, authorize, async 
     endDate: req.body.endDate
   });
 
-  console.log(newBooking);
   res.json(newBooking);
 });
 
