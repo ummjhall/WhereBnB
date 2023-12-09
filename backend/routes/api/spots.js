@@ -6,11 +6,60 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize');
 const router = express.Router();
 
+const validateGetAllSpots = [
+  check('page').optional().notEmpty().isInt({min: 1})
+    .withMessage('Page must be greater than or equal to 1'),
+  check('size').optional().notEmpty().isInt({min: 1})
+    .withMessage('Size must be greater than or equal to 1'),
+  check('minLat').optional().isFloat({min: -90, max: 90})
+    .withMessage('Minimum latitude is invalid'),
+  check('maxLat').optional().isFloat({min: -90, max: 90})
+    .withMessage('Maximum latitude is invalid'),
+  check('minLng').optional().isFloat({min: -180, max: 180})
+    .withMessage('Minimum longitude is invalid'),
+  check('maxLng').optional().isFloat({min: -180, max: 180})
+    .withMessage('Maximum longitude is invalid'),
+  check('minPrice').optional().isFloat({min: 0})
+    .withMessage('Minimum price must be greater than or equal to 0'),
+  check('maxPrice').optional().isFloat({min: 0})
+    .withMessage('Maximum price must be greater than or equal to 0'),
+  handleValidationErrors
+];
+
 // Get all Spots
-router.get('/', async (_req, res) => {
-  let spots = await Spot.findAll({include: [{model: SpotImage}, {model: Review}]});
+router.get('/', validateGetAllSpots, async (req, res) => {
+  const isFiltered = Object.keys(req.query).length > 0;
+
+  let { page, size } = req.query;
+  page = parseInt(page);
+  size = parseInt(size);
+  if (Number.isNaN(page) || page < 0) page = 1;
+  if (page > 10) page = 10;
+  if (Number.isNaN(size) || size < 0) size = 20;
+  if (size > 20) size = 20;
+  const limit = size;
+  const offset = size * (page - 1);
+
+  let spots;
+  if (isFiltered) {
+    spots = await Spot.findAll({include: [{model: SpotImage}, {model: Review}], limit, offset});
+  } else {
+    spots = await Spot.findAll({include: [{model: SpotImage}, {model: Review}]});
+  }
+
+  spots = JSON.parse(JSON.stringify(spots));
+
+  if (req.query.minLat) spots = spots.filter(spot => spot.lat >= req.query.minLat);
+  if (req.query.maxLat) spots = spots.filter(spot => spot.lat <= req.query.maxLat);
+  if (req.query.minLng) spots = spots.filter(spot => spot.lng >= req.query.minLng);
+  if (req.query.maxLng) spots = spots.filter(spot => spot.lng <= req.query.maxLng);
+  if (req.query.minPrice) spots = spots.filter(spot => spot.price >= req.query.minPrice);
+  if (req.query.maxPrice) spots = spots.filter(spot => spot.price <= req.query.maxPrice);
+
   spots = formatSpots(spots);
-  res.json(spots);
+
+  if (isFiltered) return res.json({Spots: spots, page, size});
+  res.json({Spots: spots});
 });
 
 // Get all Spots owned by the Current User
@@ -19,8 +68,9 @@ router.get('/current', requireAuth, async (req, res) => {
     where: {ownerId: req.user.id},
     include: [{model: SpotImage}, {model: Review}]
   });
+  ownedSpots = JSON.parse(JSON.stringify(ownedSpots));
   ownedSpots = formatSpots(ownedSpots);
-  res.json(ownedSpots);
+  res.json({Spots: ownedSpots});
 });
 
 // Get details of a Spot from an id
@@ -253,15 +303,12 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, authorize, async 
     endDate: req.body.endDate
   });
 
-  console.log(newBooking);
   res.json(newBooking);
 });
 
 // Utility function
 function formatSpots(spots) {
-  spots = {Spots: JSON.parse(JSON.stringify(spots))};
-
-  spots.Spots.forEach(spot => {
+  spots.forEach(spot => {
     spot.lat = Number(spot.lat);
     spot.lng = Number(spot.lng);
     spot.price = Number(spot.price);
