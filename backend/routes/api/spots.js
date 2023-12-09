@@ -49,12 +49,12 @@ router.get('/', validateGetAllSpots, async (req, res) => {
 
   spots = JSON.parse(JSON.stringify(spots));
 
-  if (req.query.minLat) spots = spots.filter(spot => spot.lat >= req.query.minLat);
-  if (req.query.maxLat) spots = spots.filter(spot => spot.lat <= req.query.maxLat);
-  if (req.query.minLng) spots = spots.filter(spot => spot.lng >= req.query.minLng);
-  if (req.query.maxLng) spots = spots.filter(spot => spot.lng <= req.query.maxLng);
-  if (req.query.minPrice) spots = spots.filter(spot => spot.price >= req.query.minPrice);
-  if (req.query.maxPrice) spots = spots.filter(spot => spot.price <= req.query.maxPrice);
+  if (req.query.minLat) spots = spots.filter(spot => spot.lat >= +req.query.minLat);
+  if (req.query.maxLat) spots = spots.filter(spot => spot.lat <= +req.query.maxLat);
+  if (req.query.minLng) spots = spots.filter(spot => spot.lng >= +req.query.minLng);
+  if (req.query.maxLng) spots = spots.filter(spot => spot.lng <= +req.query.maxLng);
+  if (req.query.minPrice) spots = spots.filter(spot => spot.price >= +req.query.minPrice);
+  if (req.query.maxPrice) spots = spots.filter(spot => spot.price <= +req.query.maxPrice);
 
   spots = formatSpots(spots);
 
