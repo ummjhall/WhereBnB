@@ -124,13 +124,18 @@ const authorizeCreateBooking = async function (req, next) {
 }
 
 const authorizeBooking = async function (req, next) {
-  const { id } = req.user;
   const booking = await Booking.findByPk(req.params.bookingId);
   req.booking = booking;
   if (!booking) return next();
 
+  const { id } = req.user;
   const isOwnBooking = id === booking.userId;
   if (isOwnBooking) return next();
+
+  if (req.method === 'DELETE') {
+    const ownerId = await Spot.findOne({where: {id: booking.spotId}}).then(res => res.ownerId);
+    if (ownerId == req.user.id) return next();
+  }
 
   const err = new Error('Forbidden');
   err.errors = {message: 'Forbidden'}

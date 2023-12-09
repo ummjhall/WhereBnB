@@ -91,12 +91,26 @@ router.put('/:bookingId', requireAuth, authorize, validateBookingEdit, async (re
   if (!booking) return res.status(404).json({message: "Booking couldn't be found"});
 
   if (new Date(booking.endDate) < new Date()) {
-    res.status(403).json({"message": "Past bookings can't be modified"});
+    return res.status(403).json({"message": "Past bookings can't be modified"});
   }
 
   booking.update(req.body);
 
   res.json(booking);
+});
+
+// Delete a Booking
+router.delete('/:bookingId', requireAuth, authorize, async (req, res) => {
+  const { booking } = req;
+  if (!booking) return res.status(404).json({message: "Booking couldn't be found"});
+
+  if (new Date(booking.startDate) < new Date()) {
+    return res.status(403).json({"message": "Bookings that have been started can't be deleted"});
+  }
+
+  await booking.destroy();
+
+  res.json({"message": "Successfully deleted"});
 });
 
 module.exports = router;

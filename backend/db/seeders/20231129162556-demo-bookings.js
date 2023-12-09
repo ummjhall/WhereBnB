@@ -37,6 +37,12 @@ module.exports = {
         endDate: '2023-11-24'
       },
       {
+        spotId: 3,    // Cap's Apartment
+        userId: 1,    // Spider-Man
+        startDate: '2023-12-07',
+        endDate: '2023-12-14'
+      },
+      {
         spotId: 1,    // Aunt May's House
         userId: 3,    // Captain America
         startDate: '2024-04-05',
