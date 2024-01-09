@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
 import App from './App';
+import { Provider } from 'react-redux';
+import { Modal, ModalProvider } from './context/Modal';
 import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
@@ -19,8 +20,11 @@ if (import.meta.env.MODE !== 'production') {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ModalProvider>
+      <Provider store={store}>
+        <App />
+        <Modal />
+      </Provider>
+    </ModalProvider>
   </React.StrictMode>
 );
