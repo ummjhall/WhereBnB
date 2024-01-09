@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
-// import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import SignupFormModal from '../SignupFormModal/SignupFormModal';
@@ -37,22 +36,6 @@ function ProfileButton({ user }) {
   };
 
   const ulClassName = 'profile-dropdown' + (showMenu ? '' : ' hidden');
-
-  // return (
-  //   <>
-  //     <button onClick={toggleMenu}>
-  //       <i className='fas fa-user-circle' />
-  //     </button>
-  //     <ul className={ulClassName} ref={ulRef}>
-  //       <li>{user.username}</li>
-  //       <li>{user.firstName} {user.lastName}</li>
-  //       <li>{user.email}</li>
-  //       <li>
-  //         <button onClick={handleLogout}>Log Out</button>
-  //       </li>
-  //     </ul>
-  //   </>
-  // );
 
   return (
     <>
