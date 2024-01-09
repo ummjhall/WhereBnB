@@ -2,9 +2,9 @@ import { RouterProvider, createBrowserRouter, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Navigation from './components/Navigation/Navigation.jsx';
-// import LoginFormPage from './components/LoginFormPage/LoginFormPage.jsx';
-import SignupFormPage from './components/SignupFormPage/SignupFormPage.jsx';
 import * as sessionActions from './store/session.js';
+// import LoginFormPage from './components/LoginFormPage/LoginFormPage.jsx';
+// import SignupFormPage from './components/SignupFormPage/SignupFormPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -18,10 +18,10 @@ const router = createBrowserRouter([
       //   path: '/login',
       //   element: <LoginFormPage />
       // },
-      {
-        path: '/signup',
-        element: <SignupFormPage />
-      }
+      // {
+      //   path: '/signup',
+      //   element: <SignupFormPage />
+      // }
     ]
   }
 ]);
