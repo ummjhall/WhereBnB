@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
+// import './SignupForm.css';
 
 function SignupFormPage() {
   const sessionUser = useSelector((state) => state.session.user);
@@ -43,7 +44,7 @@ function SignupFormPage() {
   };
 
   return (
-    <>
+    <div className='form-wrapper'>
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <label>
@@ -52,63 +53,75 @@ function SignupFormPage() {
             type='text'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            // required
+            required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        <p className='errors'>
+          {errors.email && <p>{errors.email}</p>}
+        </p>
         <label>
           Username
           <input
             type='text'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            // required
+            required
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
+        <p className='errors'>
+          {errors.username && <p>{errors.username}</p>}
+        </p>
         <label>
           First Name
           <input
             type='text'
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            // required
+            required
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
+        <p className='errors'>
+          {errors.firstName && <p>{errors.firstName}</p>}
+        </p>
         <label>
           Last Name
           <input
             type='text'
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            // required
+            required
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
+        <p className='errors'>
+          {errors.lastName && <p>{errors.lastName}</p>}
+        </p>
         <label>
           Password
           <input
             type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            // required
+            required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        <p className='errors'>
+          {errors.password && <p>{errors.password}</p>}
+        </p>
         <label>
           Confirm Password
           <input
             type='password'
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            // required
+            required
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        <p className='errors'>
+          {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        </p>
         <button type='submit'>Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 

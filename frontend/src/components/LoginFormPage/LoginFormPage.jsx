@@ -29,7 +29,7 @@ function LoginFormPage() {
 
   return (
     <div className='form-wrapper'>
-      <h2>Log In</h2>
+      <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <div className='input-wrapper'>
           <label>
