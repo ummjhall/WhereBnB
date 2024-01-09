@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
+import './LoginForm.css';
 
 function LoginFormPage() {
   const sessionUser = useSelector((state) => state.session.user);
@@ -27,33 +28,41 @@ function LoginFormPage() {
   };
 
   return (
-    <>
-      <h1>Log In</h1>
+    <div className='form-wrapper'>
+      <h2>Log In</h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          Username or Email
-          <input
-            type='text'
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            required
-          />
-        </label>
-        {errors.credential && <p>{errors.credential}</p>}
-        <label>
-          Password
-          <input
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-        {errors.message && <p>{errors.message}</p>}
+        <div className='input-wrapper'>
+          <label>
+            Username or Email
+            <input
+              type='text'
+              value={credential}
+              onChange={(e) => setCredential(e.target.value)}
+              required
+            />
+          </label>
+          <p className='errors'>
+            {errors.credential && <p>{errors.credential}</p>}
+          </p>
+        </div>
+        <div className='input-wrapper'>
+          <label>
+            Password
+            <input
+              type='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+          {errors.password && <p>{errors.password}</p>}
+        </div>
+        <p className='errors'>
+          {errors.message && <p>{errors.message}</p>}
+        </p>
         <button type='submit'>Log In</button>
       </form>
-    </>
+    </div>
   );
 }
 
