@@ -39,9 +39,9 @@ function LoginFormModal() {
               required
             />
           </label>
-          <p className='errors'>
+          <div className='errors'>
             {errors.credential && <p>{errors.credential}</p>}
-          </p>
+          </div>
         </div>
         <div className='input-wrapper'>
           <label>
@@ -53,11 +53,13 @@ function LoginFormModal() {
               required
             />
           </label>
-          {errors.password && <p>{errors.password}</p>}
+          <div className='errors'>
+            {errors.password && <p>{errors.password}</p>}
+          </div>
         </div>
-        <p className='errors'>
+        <div className='errors'>
           {errors.message && <p>{errors.message}</p>}
-        </p>
+        </div>
         <button type='submit'>Log In</button>
       </form>
     </div>
