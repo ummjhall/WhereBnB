@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllSpots } from '../../store/spots';
+import SpotTile from './SpotTile';
 import './Spots.css';
 
 function Spots() {
   const allSpots = useSelector(state => state.spots);
+  const spotsArray = Object.values(allSpots);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -13,7 +15,11 @@ function Spots() {
 
   return (
     <div className='page-wrapper'>
-      <h1>This is the home page</h1>
+      <div className='spot-tile-wrapper'>
+        {spotsArray.map(spot => (
+          <SpotTile key={spot.id} spot={spot}/>
+        ))}
+      </div>
     </div>
   );
 }

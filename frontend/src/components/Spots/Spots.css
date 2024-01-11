@@ -1,3 +1,47 @@
 .page-wrapper {
   margin: auto 40px;
 }
+
+.spot-tile-wrapper {
+  border: 1px solid red;
+  display: flex;
+  column-gap: 25px;
+  row-gap: 25px;
+}
+
+.spot-tile {
+  max-width: 315px;
+  max-height: 375px;
+}
+
+.spot-tile-img {
+  max-width: 315px;
+  max-height: 300px;
+}
+
+.spot-tile_info-span {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+  width: 100px;
+  color: white;
+  font-size: 12px;
+  background-color: #192733;
+  border-radius: 10px;
+  padding: 10px 15px 10px 15px;
+  text-align: center;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+}
