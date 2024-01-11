@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
@@ -6,14 +6,23 @@ import * as sessionActions from '../../store/session';
 
 function SignupFormModal() {
   const dispatch = useDispatch();
-  const [ email, setEmail ] = useState('');
-  const [ username, setUsername ] = useState('');
   const [ firstName, setFirstName ] = useState('');
   const [ lastName, setLastName ] = useState('');
+  const [ email, setEmail ] = useState('');
+  const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ confirmPassword, setConfirmPassword ] = useState('');
   const [ errors, setErrors ] = useState({});
   const { closeModal } = useModal();
+
+  const validationErrors =
+    !firstName.length ||
+    !lastName.length ||
+    !email.length ||
+    username.length < 4 ||
+    password.length < 6 ||
+    !confirmPassword.length ||
+    password !== confirmPassword;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,30 +56,6 @@ function SignupFormModal() {
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          Email
-          <input
-            type='text'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <div className='errors'>
-          {errors.email && <p>{errors.email}</p>}
-        </div>
-        <label>
-          Username
-          <input
-            type='text'
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </label>
-        <div className='errors'>
-          {errors.username && <p>{errors.username}</p>}
-        </div>
-        <label>
           First Name
           <input
             type='text'
@@ -93,6 +78,30 @@ function SignupFormModal() {
         </label>
         <div className='errors'>
           {errors.lastName && <p>{errors.lastName}</p>}
+        </div>
+        <label>
+          Email
+          <input
+            type='text'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </label>
+        <div className='errors'>
+          {errors.email && <p>{errors.email}</p>}
+        </div>
+        <label>
+          Username
+          <input
+            type='text'
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </label>
+        <div className='errors'>
+          {errors.username && <p>{errors.username}</p>}
         </div>
         <label>
           Password
@@ -118,7 +127,12 @@ function SignupFormModal() {
         <div className='errors'>
           {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         </div>
-        <button type='submit'>Sign Up</button>
+        <button
+          type='submit'
+          disabled={validationErrors}
+        >
+          Sign Up
+        </button>
       </form>
     </div>
   );
