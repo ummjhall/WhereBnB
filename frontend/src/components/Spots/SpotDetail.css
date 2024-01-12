@@ -57,3 +57,12 @@
 #sub-img-4 {
   grid-area: '4';
 }
+
+.spot-detail-info-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .spot-detail-callout {
+  border: 1px solid blue;
+} */

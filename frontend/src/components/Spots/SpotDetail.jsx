@@ -14,7 +14,6 @@ function SpotDetail() {
   if (spot && spot.SpotImages) {
     mainImage = spot.SpotImages.find(image => image.preview === true);
     subImages = spot.SpotImages.filter(image => image.preview === false);
-    console.log(subImages);
   }
 
   useEffect(() => {
@@ -43,6 +42,14 @@ function SpotDetail() {
           <p>{spot.description}</p>
         </div>
         <div className='spot-detail-callout'>
+          <div>${spot.price} night</div>
+          <div>★ {isNaN(spot.avgRating) ? 'New' : spot.avgRating} · {spot.numReviews} reviews</div>
+          <button
+            type='button'
+            onClick={() => alert('Feature Coming Soon...')}
+          >
+            Reserve
+          </button>
         </div>
       </div>
     </div>
