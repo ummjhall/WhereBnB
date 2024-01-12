@@ -9,6 +9,13 @@ function SpotDetail() {
   const spot = useSelector(state => state.spots[spotId]);
   const dispatch = useDispatch();
 
+  let mainImage;
+  let subImages;
+  if (spot && spot.SpotImages) {
+    mainImage = spot.SpotImages.find(image => image.preview === true);
+    subImages = spot.SpotImages.filter(image => image.preview === false);
+  }
+
   useEffect(() => {
     dispatch(getSpotDetails(spotId));
   }, [dispatch, spotId]);
@@ -20,13 +27,14 @@ function SpotDetail() {
       <div>{spot.city}, {spot.state}, {spot.country}</div>
       <div className='spot-detail-images'>
         <div className='spot-detail-images_main'>
+          {mainImage && <img src={mainImage.url} alt='location photo' style={{maxWidth: '400px', maxHeight: '350px'}}/>}
         </div>
         <div className='spot-detail-images_sub'>
         </div>
       </div>
       <div className='spot-detail-info-wrapper'>
         <div className='spot-detail-description'>
-          <div>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</div>
+          <div>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</div>
           <p>{spot.description}</p>
         </div>
         <div className='spot-detail-callout'>
