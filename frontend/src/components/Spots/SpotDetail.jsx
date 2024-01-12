@@ -14,6 +14,7 @@ function SpotDetail() {
   if (spot && spot.SpotImages) {
     mainImage = spot.SpotImages.find(image => image.preview === true);
     subImages = spot.SpotImages.filter(image => image.preview === false);
+    console.log(subImages);
   }
 
   useEffect(() => {
@@ -22,14 +23,18 @@ function SpotDetail() {
 
   if (!spot) return null;
   return (
-    <div className='page-wrapper'>
+    <div className='spot-detail-page-wrapper'>
       <h1>{spot.name}</h1>
       <div>{spot.city}, {spot.state}, {spot.country}</div>
-      <div className='spot-detail-images'>
+      <div className='spot-detail-images-grid-container'>
         <div className='spot-detail-images_main'>
-          {mainImage && <img src={mainImage.url} alt='location photo' style={{maxWidth: '400px', maxHeight: '350px'}}/>}
+          {mainImage && <img className='sdi-main-image' src={mainImage.url} alt='location photo' />}
         </div>
         <div className='spot-detail-images_sub'>
+          {subImages && subImages[0] && <img className='sdi-sub-image' id='sub-img-1' src={subImages[0].url} alt='location photo' />}
+          {subImages && subImages[1] && <img className='sdi-sub-image' id='sub-img-2' src={subImages[1].url} alt='location photo' />}
+          {subImages && subImages[2] && <img className='sdi-sub-image' id='sub-img-3' src={subImages[2].url} alt='location photo' />}
+          {subImages && subImages[3] && <img className='sdi-sub-image' id='sub-img-4' src={subImages[3].url} alt='location photo' />}
         </div>
       </div>
       <div className='spot-detail-info-wrapper'>

@@ -34,7 +34,7 @@ module.exports = {
       },
       {
         spotId: 3,
-        url: 'spotimageurl6',
+        url: 'https://res.cloudinary.com/dt2uyzpbn/image/upload/v1705078511/cld-sample-2.jpg',
         preview: false
       },
       {
@@ -49,7 +49,7 @@ module.exports = {
       },
       {
         spotId: 4,
-        url: 'spotimageurl6',
+        url: 'https://res.cloudinary.com/dt2uyzpbn/image/upload/v1705078511/cld-sample-2.jpg',
         preview: false
       },
       {
@@ -69,7 +69,12 @@ module.exports = {
       },
       {
         spotId: 5,
-        url: 'spotimageurl6',
+        url: 'https://res.cloudinary.com/dt2uyzpbn/image/upload/v1705078511/cld-sample-2.jpg',
+        preview: false
+      },
+      {
+        spotId: 5,
+        url: 'https://res.cloudinary.com/dt2uyzpbn/image/upload/v1705078511/cld-sample-2.jpg',
         preview: false
       },
       {
@@ -89,7 +94,12 @@ module.exports = {
       },
       {
         spotId: 6,
-        url: 'spotimageurl6',
+        url: 'https://res.cloudinary.com/dt2uyzpbn/image/upload/v1705078511/cld-sample-2.jpg',
+        preview: false
+      },
+      {
+        spotId: 6,
+        url: 'https://res.cloudinary.com/dt2uyzpbn/image/upload/v1705078511/cld-sample-2.jpg',
         preview: false
       },
       {
@@ -109,7 +119,12 @@ module.exports = {
       },
       {
         spotId: 7,
-        url: 'spotimageurl6',
+        url: 'https://res.cloudinary.com/dt2uyzpbn/image/upload/v1705078511/cld-sample-2.jpg',
+        preview: false
+      },
+      {
+        spotId: 7,
+        url: 'https://res.cloudinary.com/dt2uyzpbn/image/upload/v1705078511/cld-sample-2.jpg',
         preview: false
       },
       {
@@ -129,7 +144,12 @@ module.exports = {
       },
       {
         spotId: 8,
-        url: 'spotimageurl6',
+        url: 'https://res.cloudinary.com/dt2uyzpbn/image/upload/v1705078511/cld-sample-2.jpg',
+        preview: false
+      },
+      {
+        spotId: 8,
+        url: 'https://res.cloudinary.com/dt2uyzpbn/image/upload/v1705078511/cld-sample-2.jpg',
         preview: false
       },
       {
@@ -149,7 +169,12 @@ module.exports = {
       },
       {
         spotId: 9,
-        url: 'spotimageurl6',
+        url: 'https://res.cloudinary.com/dt2uyzpbn/image/upload/v1705078511/cld-sample-2.jpg',
+        preview: false
+      },
+      {
+        spotId: 9,
+        url: 'https://res.cloudinary.com/dt2uyzpbn/image/upload/v1705078511/cld-sample-2.jpg',
         preview: false
       },
       {
