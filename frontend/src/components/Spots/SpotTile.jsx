@@ -1,4 +1,6 @@
 import jh from '../../../../images/jh.jpg';
+import './Spots.css';
+
 
 function SpotTile({ spot }) {
   return (
@@ -7,9 +9,11 @@ function SpotTile({ spot }) {
       <img className='spot-tile-img' src={jh} />
       <div className='spot-tile_info-span'>
         <span>{spot.city}, {spot.state}</span>
-        <span>★ {spot.avgRating}</span>
+        <span>★ {isNaN(spot.avgRating) ? 'New' : spot.avgRating}</span>
       </div>
-      <div>${spot.price} night</div>
+      <div>
+        ${spot.price} night
+      </div>
     </div>
   );
 }

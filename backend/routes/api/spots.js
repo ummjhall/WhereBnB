@@ -94,7 +94,7 @@ router.get('/:spotId', async (req, res) => {
   spot.price = Number(spot.price);
   spot.numReviews = spot.Reviews.length;
   const totalStars = spot.Reviews.reduce((sum, review) => sum + review.stars, 0);
-  spot.avgStarRating = totalStars / spot.numReviews;
+  spot.avgStarRating = (totalStars / spot.numReviews).toFixed(1);
   delete spot.Reviews;
 
   res.json(spot);
@@ -316,7 +316,7 @@ function formatSpots(spots) {
     const totalStars = spot.Reviews.reduce((sum, review) => {
       return sum + review.stars;
     }, 0);
-    spot.avgRating = totalStars / spot.Reviews.length;
+    spot.avgRating = (totalStars / spot.Reviews.length).toFixed(1);
     delete spot.Reviews;
 
     spot.SpotImages.forEach(spotImage => {
