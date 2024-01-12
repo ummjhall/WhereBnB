@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import * as sessionActions from './store/session.js';
 import Navigation from './components/Navigation/Navigation.jsx';
 import Spots from './components/Spots/Spots.jsx';
+import SpotDetail from './components/Spots/SpotDetail.jsx';
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Spots />
+      },
+      {
+        path: '/spots/:spotId',
+        element: <SpotDetail />
       }
     ]
   }

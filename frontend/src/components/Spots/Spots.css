@@ -3,7 +3,7 @@
 }
 
 .spot-tile-wrapper {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   column-gap: 25px;
   flex-wrap: wrap;
@@ -12,9 +12,11 @@
 }
 
 .spot-tile, .spot-tile-img {
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  color: black;
   max-width: 315px;
-  max-height: 300px
+  max-height: 300px;
+  text-decoration: none;
 }
 
 .spot-tile_info-span {
