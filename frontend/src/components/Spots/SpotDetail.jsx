@@ -20,7 +20,7 @@ function SpotDetail() {
     dispatch(getSpotDetails(spotId));
   }, [dispatch, spotId]);
 
-  if (!spot) return null;
+  if (!spot || !spot.Owner || !spot.SpotImages) return null;
   return (
     <div className='spot-detail-page-wrapper'>
       <h1>{spot.name}</h1>
@@ -44,7 +44,7 @@ function SpotDetail() {
         <div className='spot-detail-callout'>
           <div>${spot.price} night</div>
           <div>
-            ★ {isNaN(spot.avgStarRating)
+            ★ {!spot.avgStarRating
             ? 'New'
             : `${spot.avgStarRating} · ${spot.numReviews} review${spot.numReviews > 1 ? 's' : ''}`}
           </div>
@@ -59,7 +59,7 @@ function SpotDetail() {
       <hr />
       <div>
         <h2>
-          ★ {isNaN(spot.avgStarRating)
+          ★ {!spot.avgStarRating
           ? 'New'
           : `${spot.avgStarRating} · ${spot.numReviews} review${spot.numReviews > 1 ? 's' : ''}`}
         </h2>

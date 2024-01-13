@@ -10,7 +10,7 @@ function Spots() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllSpots())
+    dispatch(getAllSpots());
   }, [dispatch]);
 
   return (

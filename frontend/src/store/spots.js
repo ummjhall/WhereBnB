@@ -49,8 +49,7 @@ const spotsReducer = (state = initialState, action) => {
       return {...state, ...spots};
     }
     case LOAD_SPOT_DETAILS:
-      console.log(action.spotData);
-      return {...state, [action.spotData.id]: action.spotData};
+      return {...state, [action.spotData.id]: {...state[action.spotData.id], ...action.spotData}};
     default:
       return state;
   }
