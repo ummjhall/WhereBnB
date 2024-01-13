@@ -26,7 +26,7 @@ const reviewsReducer = (state = initialState, action) => {
     case LOAD_REVIEWS: {
       // SHAPE OF STATE>>> state.reviews: {<<spotId>>: spotReviews: {<<reviewId>>: review}}}
       const spotReviews = {};
-      const spotId = action.reviewsData.Reviews[0].spotId;
+      const spotId = action.reviewsData?.Reviews[0]?.spotId;
       action.reviewsData.Reviews.forEach(review => spotReviews[review.id] = review);
       return {...state, [spotId]: {spotReviews: {...spotReviews}}};
     }

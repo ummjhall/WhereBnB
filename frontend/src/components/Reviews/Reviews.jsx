@@ -4,6 +4,7 @@ import { getSpotReviews } from '../../store/reviews';
 
 function Reviews({ spot }) {
   const spotReviews = useSelector(state => state.reviews[spot.id]?.spotReviews);
+  const user = useSelector(state => state.session.user);
   let reviewsArray;
   if (spotReviews) reviewsArray = Object.values(spotReviews);
   const dispatch = useDispatch();
@@ -14,9 +15,7 @@ function Reviews({ spot }) {
     dispatch(getSpotReviews(spot.id));
   }, [dispatch, spot.id]);
 
-  if (!spotReviews) return;
-
-  return (
+  return spotReviews ? (
     <div>
       <div>
         {reviewsArray && reviewsArray.map(review => (
@@ -34,7 +33,11 @@ function Reviews({ spot }) {
         ))}
       </div>
     </div>
-  );
+  ) : user && user.id !== spot.Owner.id ? (
+    <div>
+      Be the first to post a review!
+    </div>
+  ) : null;
 }
 
 export default Reviews;
