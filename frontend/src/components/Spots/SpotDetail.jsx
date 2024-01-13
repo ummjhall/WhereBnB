@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpotDetails } from '../../store/spots';
+import Reviews from '../Reviews/Reviews';
 import './SpotDetail.css';
 
 function SpotDetail() {
@@ -21,6 +22,7 @@ function SpotDetail() {
   }, [dispatch, spotId]);
 
   if (!spot || !spot.Owner || !spot.SpotImages) return null;
+
   return (
     <div className='spot-detail-page-wrapper'>
       <h1>{spot.name}</h1>
@@ -64,6 +66,7 @@ function SpotDetail() {
           : `${spot.avgStarRating.toFixed(1)} · ${spot.numReviews} review${spot.numReviews > 1 ? 's' : ''}`}
         </h2>
       </div>
+      <Reviews spot={spot} />
     </div>
   );
 }
