@@ -46,7 +46,7 @@ function SpotDetail() {
           <div>
             ★ {!spot.avgStarRating
             ? 'New'
-            : `${spot.avgStarRating} · ${spot.numReviews} review${spot.numReviews > 1 ? 's' : ''}`}
+            : `${spot.avgStarRating.toFixed(1)} · ${spot.numReviews} review${spot.numReviews > 1 ? 's' : ''}`}
           </div>
           <button
             type='button'
@@ -61,7 +61,7 @@ function SpotDetail() {
         <h2>
           ★ {!spot.avgStarRating
           ? 'New'
-          : `${spot.avgStarRating} · ${spot.numReviews} review${spot.numReviews > 1 ? 's' : ''}`}
+          : `${spot.avgStarRating.toFixed(1)} · ${spot.numReviews} review${spot.numReviews > 1 ? 's' : ''}`}
         </h2>
       </div>
     </div>

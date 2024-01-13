@@ -9,7 +9,7 @@ function SpotTile({ spot }) {
       <img className='spot-tile-img' src={jh} />
       <div className='spot-tile_info-span'>
         <span>{spot.city}, {spot.state}</span>
-        <span>★ {isNaN(spot.avgRating) ? 'New' : spot.avgRating}</span>
+        <span>★ {!spot.avgRating ? 'New' : spot.avgRating.toFixed(1)}</span>
       </div>
       <div>
         ${spot.price} night

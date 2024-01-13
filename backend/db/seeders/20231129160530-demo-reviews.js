@@ -23,7 +23,7 @@ module.exports = {
         spotId: 2,    // Stark Tower
         userId: 4,    // Captain America
         review: 'A little over the top',
-        stars: 3
+        stars: 2
       },
       {
         spotId: 3,    // Cap's Apartment
