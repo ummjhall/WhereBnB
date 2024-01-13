@@ -58,7 +58,11 @@ function SpotDetail() {
       </div>
       <hr />
       <div>
-        <h2>★ {isNaN(spot.avgStarRating) ? 'New' : spot.avgStarRating} · {spot.numReviews} reviews</h2>
+        <h2>
+          ★ {isNaN(spot.avgStarRating)
+          ? 'New'
+          : `${spot.avgStarRating} · ${spot.numReviews} review${spot.numReviews > 1 ? 's' : ''}`}
+        </h2>
       </div>
     </div>
   );
