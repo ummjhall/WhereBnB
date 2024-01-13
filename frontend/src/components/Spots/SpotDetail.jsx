@@ -43,7 +43,11 @@ function SpotDetail() {
         </div>
         <div className='spot-detail-callout'>
           <div>${spot.price} night</div>
-          <div>★ {isNaN(spot.avgRating) ? 'New' : spot.avgRating} · {spot.numReviews} reviews</div>
+          <div>
+            ★ {isNaN(spot.avgStarRating)
+            ? 'New'
+            : `${spot.avgStarRating} · ${spot.numReviews} review${spot.numReviews > 1 ? 's' : ''}`}
+          </div>
           <button
             type='button'
             onClick={() => alert('Feature Coming Soon...')}
@@ -51,6 +55,10 @@ function SpotDetail() {
             Reserve
           </button>
         </div>
+      </div>
+      <hr />
+      <div>
+        <h2>★ {isNaN(spot.avgStarRating) ? 'New' : spot.avgStarRating} · {spot.numReviews} reviews</h2>
       </div>
     </div>
   );
