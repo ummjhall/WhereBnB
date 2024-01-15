@@ -5,6 +5,7 @@ import * as sessionActions from './store/session.js';
 import Navigation from './components/Navigation/Navigation.jsx';
 import Spots from './components/Spots/Spots.jsx';
 import SpotDetail from './components/Spots/SpotDetail.jsx';
+import SpotForm from './components/Spots/SpotForm.jsx';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/spots/new',
-        element: <h2>New Spot</h2>
+        element: <SpotForm />
       },
       {
         path: '*',
