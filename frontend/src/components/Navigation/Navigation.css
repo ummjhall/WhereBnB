@@ -1,6 +1,6 @@
 .header-wrapper {
   align-content: center;
-  /* border: 1px solid red; */
+  /* border: 1px solid red;  */
   display: flex;
   justify-content: space-between;
   max-width: 100%;
@@ -18,6 +18,11 @@
   margin: 0 0 0 40px;
   padding: 0;
   width: 140px;
+}
+
+.header_right-wrapper {
+  /* border: 1px solid red; */
+  display: flex;
 }
 
 #profile-button-wrapper {

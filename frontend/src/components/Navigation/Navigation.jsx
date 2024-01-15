@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import ProfileButton from './ProfileButton';
 import logo from '../../../../images/logo.png';
 import './Navigation.css';
@@ -10,14 +10,21 @@ function Navigation({ isLoaded }) {
   return (
     <>
       <div className='header-wrapper'>
-        <span>
+        <div>
           <NavLink to="/"><img id='logo' src={logo} alt='logo' /></NavLink>
-        </span>
-        {isLoaded && (
-          <span>
-            <ProfileButton user={sessionUser} />
-          </span>
-        )}
+        </div>
+        <div className='header_right-wrapper'>
+          {sessionUser && (
+            <Link to='/spots/new'>
+              Create a New Spot
+            </Link>
+          )}
+          {isLoaded && (
+            <span>
+              <ProfileButton user={sessionUser} />
+            </span>
+          )}
+        </div>
       </div>
       <hr />
     </>

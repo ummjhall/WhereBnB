@@ -5,9 +5,11 @@ import { getSpotReviews } from '../../store/reviews';
 function Reviews({ spot }) {
   const spotReviews = useSelector(state => state.reviews[spot.id]?.spotReviews);
   const user = useSelector(state => state.session.user);
+  const dispatch = useDispatch();
+
   let reviewsArray;
   if (spotReviews) reviewsArray = Object.values(spotReviews);
-  const dispatch = useDispatch();
+
   const months = ['January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'];
 
