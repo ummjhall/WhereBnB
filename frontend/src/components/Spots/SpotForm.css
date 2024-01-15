@@ -11,3 +11,7 @@
 .spot-form_price {
   display: inline-block;
 }
+
+.error {
+  color: red;
+}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './SpotForm.css';
 
 function SpotForm() {
@@ -8,12 +8,57 @@ function SpotForm() {
   const [ state, setState ] = useState('');
   const [ description, setDescription ] = useState('');
   const [ title, setTitle ] = useState('');
-  const [ price, setPrice ] = useState(0);
+  const [ price, setPrice ] = useState('');
   const [ previewImage, setPreviewImage ] = useState('');
   const [ image2, setImage2 ] = useState('');
   const [ image3, setImage3 ] = useState('');
   const [ image4, setImage4 ] = useState('');
   const [ image5, setImage5 ] = useState('');
+  const [ validationErrors, setValidationErrors ] = useState({});
+  const [ hasSubmitted, setHasSubmitted ] = useState(false);
+
+  useEffect(() => {
+    const errors = {};
+
+    if (!country.length)
+      errors.country = 'Country is required';
+    if (!address.length)
+      errors.address = 'Address is required';
+    if (!city.length)
+      errors.city = 'City is required';
+    if (!state.length)
+      errors.state = 'State is required';
+    if (description.length < 30)
+      errors.description = 'Description needs a minimum of 30 characters';
+    if (!title.length)
+      errors.title = 'Name is required';
+    if (!price.length)
+      errors.price = 'Price is required';
+    if (!previewImage.length)
+      errors.previewImage = 'Preview image is required';
+    else if (!previewImage.endsWith('.png') && !previewImage.endsWith('.jpg') && !previewImage.endsWith('.jpeg'))
+      errors.previewImage = 'Image URL must end in .png, .jpg, or .jpeg';
+    if (!image2.endsWith('.png') && !image2.endsWith('.jpg') && !image2.endsWith('.jpeg'))
+      errors.image2 = 'Image URL must end in .png, .jpg, or .jpeg';
+    if (!image3.endsWith('.png') && !image3.endsWith('.jpg') && !image3.endsWith('.jpeg'))
+      errors.image3 = 'Image URL must end in .png, .jpg, or .jpeg';
+    if (!image4.endsWith('.png') && !image4.endsWith('.jpg') && !image4.endsWith('.jpeg'))
+      errors.image4 = 'Image URL must end in .png, .jpg, or .jpeg';
+    if (!image5.endsWith('.png') && !image5.endsWith('.jpg') && !image5.endsWith('.jpeg'))
+      errors.image5 = 'Image URL must end in .png, .jpg, or .jpeg';
+
+    setValidationErrors(errors);
+  }, [country, address, city, state, description, title, price, previewImage, image2, image3, image4, image5]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setHasSubmitted(true);
+
+    if (Object.values(validationErrors).length)
+      return;
+
+
+  };
 
 
 
@@ -22,9 +67,12 @@ function SpotForm() {
       <h1>Create a New Spot</h1>
       <h2>Where&apos;s your place located?</h2>
       <p>Guests will only get your exact address once they booked a reservation.</p>
-      <form>
+      <form onSubmit={handleSubmit}>
         {/* *** Section 1 *** */}
-        <label>Country
+        <label>Country{' '}
+          <span className='error'>
+            {hasSubmitted && validationErrors.country && `${validationErrors.country}`}
+          </span>
           <input
             type='text'
             placeholder='Country'
@@ -32,7 +80,10 @@ function SpotForm() {
             onChange={e => setCountry(e.target.value)}
           />
         </label>
-        <label>Street Address
+        <label>Street Address{' '}
+          <span className='error'>
+            {hasSubmitted && validationErrors.address && `${validationErrors.address}`}
+          </span>
           <input
             type='text'
             placeholder='Address'
@@ -42,7 +93,10 @@ function SpotForm() {
         </label>
         <div className='spot-form_city-state'>
           <span>
-            <label>City
+            <label>City{' '}
+              <span className='error'>
+                {hasSubmitted && validationErrors.city && `${validationErrors.city}`}
+              </span>
               <input
                 type='text'
                 placeholder='City'
@@ -53,7 +107,10 @@ function SpotForm() {
           </span>
           <span>,</span>
           <span>
-            <label>State
+            <label>State{' '}
+              <span className='error'>
+                {hasSubmitted && validationErrors.state && `${validationErrors.state}`}
+              </span>
               <input
                 type='text'
                 placeholder='STATE'
@@ -72,6 +129,9 @@ function SpotForm() {
           value={description}
           onChange={e => setDescription(e.target.value)}
         />
+        <div className='error'>
+          {hasSubmitted && validationErrors.description && `${validationErrors.description}`}
+        </div>
         <hr />
         {/* *** Section 3 *** */}
         <h2>Create a title for your spot</h2>
@@ -82,6 +142,9 @@ function SpotForm() {
           value={title}
           onChange={e => setTitle(e.target.value)}
         />
+        <div className='error'>
+          {hasSubmitted && validationErrors.title && `${validationErrors.title}`}
+        </div>
         <hr />
         {/* *** Section 4 *** */}
         <h2>Set a base price for your spot</h2>
@@ -98,6 +161,9 @@ function SpotForm() {
             />
           </span>
         </div>
+        <div className='error'>
+          {hasSubmitted && validationErrors.price && `${validationErrors.price}`}
+        </div>
         <hr />
         {/* *** Section 5 *** */}
         <h2>Liven up your spot with photos</h2>
@@ -108,33 +174,53 @@ function SpotForm() {
           value={previewImage}
           onChange={e => setPreviewImage(e.target.value)}
         />
+        <div className='error'>
+          {hasSubmitted && validationErrors.previewImage && `${validationErrors.previewImage}`}
+        </div>
         <input
           type='text'
           placeholder='Image URL'
           value={image2}
           onChange={e => setImage2(e.target.value)}
         />
+        <div className='error'>
+          {hasSubmitted && validationErrors.image2 && `${validationErrors.image2}`}
+        </div>
         <input
           type='text'
           placeholder='Image URL'
           value={image3}
           onChange={e => setImage3(e.target.value)}
         />
+        <div className='error'>
+          {hasSubmitted && validationErrors.image3 && `${validationErrors.image3}`}
+        </div>
         <input
           type='text'
           placeholder='Image URL'
           value={image4}
           onChange={e => setImage4(e.target.value)}
         />
+        <div className='error'>
+          {hasSubmitted && validationErrors.image4 && `${validationErrors.image4}`}
+        </div>
         <input
           type='text'
           placeholder='Image URL'
           value={image5}
           onChange={e => setImage5(e.target.value)}
         />
+        <div className='error'>
+          {hasSubmitted && validationErrors.image5 && `${validationErrors.image5}`}
+        </div>
         <hr />
         {/* *** Submit *** */}
-        <button type='submit'>Create Spot</button>
+        <button
+          type='submit'
+          disabled={hasSubmitted && Object.values(validationErrors).length}
+        >
+          Create Spot
+        </button>
       </form>
     </div>
   );
