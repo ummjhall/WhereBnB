@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createSpot, uploadImage } from '../../store/spots';
 import './SpotForm.css';
-import { csrfFetch } from '../../store/csrf';
 
 function SpotForm() {
   const [ country, setCountry ] = useState('');
@@ -76,25 +75,9 @@ function SpotForm() {
     };
 
     const created = await dispatch(createSpot(spotFormInfo));
-    // console.log(created);
 
     if (created) {
       const spotId = created.id;
-
-      // console.log('****************');
-      // console.log('spotId', spotId);
-      // console.log('previewImage', previewImage);
-      // console.log(JSON.stringify({url: previewImage, preview: true}));
-
-      // const res = await csrfFetch(`api/spots/${spotId}/images`, {
-      //   method: 'POST',
-      //   body: JSON.stringify({url: previewImage, preview: true})
-      // });
-
-      // console.log('*-*-*-*-*-*-*-*-*-*-*-*');
-      // const test = res.json();
-      // console.log(test);
-
       await dispatch(uploadImage(spotId, {url: previewImage, preview: true}));
       if (image2) await dispatch(uploadImage(spotId, {url: image2, preview: false}));
       if (image3) await dispatch(uploadImage(spotId, {url: image3, preview: false}));

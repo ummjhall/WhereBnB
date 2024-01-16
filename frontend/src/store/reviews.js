@@ -12,11 +12,10 @@ const loadReviews = (reviewsData) => {
 export const getSpotReviews = (spotId) => async dispatch => {
   const res = await csrfFetch(`/api/spots/${spotId}/reviews`);
 
-  if (res.ok) {
-    const reviewsData = await res.json();
+  const reviewsData = await res.json();
+  if (res.ok)
     dispatch(loadReviews(reviewsData));
-    return res;
-  }
+  return reviewsData;
 };
 
 const initialState = {};
