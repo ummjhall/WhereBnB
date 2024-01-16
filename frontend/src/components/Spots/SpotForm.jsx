@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { createSpot, uploadImage } from '../../store/spots';
 import './SpotForm.css';
+import { csrfFetch } from '../../store/csrf';
 
 function SpotForm() {
   const [ country, setCountry ] = useState('');
@@ -16,6 +20,8 @@ function SpotForm() {
   const [ image5, setImage5 ] = useState('');
   const [ validationErrors, setValidationErrors ] = useState({});
   const [ hasSubmitted, setHasSubmitted ] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const errors = {};
@@ -38,29 +44,65 @@ function SpotForm() {
       errors.previewImage = 'Preview image is required';
     else if (!previewImage.endsWith('.png') && !previewImage.endsWith('.jpg') && !previewImage.endsWith('.jpeg'))
       errors.previewImage = 'Image URL must end in .png, .jpg, or .jpeg';
-    if (!image2.endsWith('.png') && !image2.endsWith('.jpg') && !image2.endsWith('.jpeg'))
+    if (image2 && !image2.endsWith('.png') && !image2.endsWith('.jpg') && !image2.endsWith('.jpeg'))
       errors.image2 = 'Image URL must end in .png, .jpg, or .jpeg';
-    if (!image3.endsWith('.png') && !image3.endsWith('.jpg') && !image3.endsWith('.jpeg'))
+    if (image3 && !image3.endsWith('.png') && !image3.endsWith('.jpg') && !image3.endsWith('.jpeg'))
       errors.image3 = 'Image URL must end in .png, .jpg, or .jpeg';
-    if (!image4.endsWith('.png') && !image4.endsWith('.jpg') && !image4.endsWith('.jpeg'))
+    if (image4 && !image4.endsWith('.png') && !image4.endsWith('.jpg') && !image4.endsWith('.jpeg'))
       errors.image4 = 'Image URL must end in .png, .jpg, or .jpeg';
-    if (!image5.endsWith('.png') && !image5.endsWith('.jpg') && !image5.endsWith('.jpeg'))
+    if (image5 && !image5.endsWith('.png') && !image5.endsWith('.jpg') && !image5.endsWith('.jpeg'))
       errors.image5 = 'Image URL must end in .png, .jpg, or .jpeg';
 
     setValidationErrors(errors);
   }, [country, address, city, state, description, title, price, previewImage, image2, image3, image4, image5]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
 
     if (Object.values(validationErrors).length)
       return;
 
+    const spotFormInfo = {
+      address,
+      city,
+      state,
+      country,
+      lat: -90,
+      lng: -180,
+      name: title,
+      description,
+      price
+    };
 
+    const created = await dispatch(createSpot(spotFormInfo));
+    // console.log(created);
+
+    if (created) {
+      const spotId = created.id;
+
+      // console.log('****************');
+      // console.log('spotId', spotId);
+      // console.log('previewImage', previewImage);
+      // console.log(JSON.stringify({url: previewImage, preview: true}));
+
+      // const res = await csrfFetch(`api/spots/${spotId}/images`, {
+      //   method: 'POST',
+      //   body: JSON.stringify({url: previewImage, preview: true})
+      // });
+
+      // console.log('*-*-*-*-*-*-*-*-*-*-*-*');
+      // const test = res.json();
+      // console.log(test);
+
+      await dispatch(uploadImage(spotId, {url: previewImage, preview: true}));
+      if (image2) await dispatch(uploadImage(spotId, {url: image2, preview: false}));
+      if (image3) await dispatch(uploadImage(spotId, {url: image3, preview: false}));
+      if (image4) await dispatch(uploadImage(spotId, {url: image4, preview: false}));
+      if (image5) await dispatch(uploadImage(spotId, {url: image5, preview: false}));
+      navigate(`/spots/${spotId}`);
+    }
   };
-
-
 
   return (
     <div className='spot-form-page-wrapper'>
