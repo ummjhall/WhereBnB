@@ -55,16 +55,6 @@ export const createSpot = (spotFormData) => async dispatch => {
   return spotData;
 };
 
-export const uploadImage = (spotId, formImageData) => async dispatch => {
-  const res = await csrfFetch(`/api/spots/${spotId}/images`, {
-    method: 'POST',
-    body: JSON.stringify(formImageData)
-  });
-
-  const imageData = await res.json();
-  return imageData;
-};
-
 const initialState = {};
 
 const spotsReducer = (state = initialState, action) => {

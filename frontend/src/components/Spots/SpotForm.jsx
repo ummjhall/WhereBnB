@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { createSpot, uploadImage } from '../../store/spots';
+import { createSpot } from '../../store/spots';
+import { csrfFetch } from '../../store/csrf';
 import './SpotForm.css';
 
 function SpotForm() {
@@ -55,6 +56,16 @@ function SpotForm() {
     setValidationErrors(errors);
   }, [country, address, city, state, description, title, price, previewImage, image2, image3, image4, image5]);
 
+  const uploadImage = async (spotId, formImageData) => {
+    const res = await csrfFetch(`/api/spots/${spotId}/images`, {
+      method: 'POST',
+      body: JSON.stringify(formImageData)
+    });
+
+    const imageData = await res.json();
+    return imageData;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
@@ -78,11 +89,11 @@ function SpotForm() {
 
     if (created) {
       const spotId = created.id;
-      await dispatch(uploadImage(spotId, {url: previewImage, preview: true}));
-      if (image2) await dispatch(uploadImage(spotId, {url: image2, preview: false}));
-      if (image3) await dispatch(uploadImage(spotId, {url: image3, preview: false}));
-      if (image4) await dispatch(uploadImage(spotId, {url: image4, preview: false}));
-      if (image5) await dispatch(uploadImage(spotId, {url: image5, preview: false}));
+      await uploadImage(spotId, {url: previewImage, preview: true});
+      if (image2) await uploadImage(spotId, {url: image2, preview: false});
+      if (image3) await uploadImage(spotId, {url: image3, preview: false});
+      if (image4) await uploadImage(spotId, {url: image4, preview: false});
+      if (image5) await uploadImage(spotId, {url: image5, preview: false});
       navigate(`/spots/${spotId}`);
     }
   };
