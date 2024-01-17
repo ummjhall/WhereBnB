@@ -11,19 +11,35 @@ function LoginFormModal() {
   const [ errors, setErrors ] = useState({});
   const { closeModal } = useModal();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setErrors({});
-
-    return dispatch(sessionActions.login({credential, password}))
+  const login = (credentials) => {
+    dispatch(sessionActions.login(credentials))
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
         if (data?.errors) setErrors(data.errors);
-        else if (data?.message) setErrors(data);
+        else if (data?.message) {
+          if (data.message === 'Invalid credentials')
+            data.message = 'The provided credentials were invalid';
+          setErrors(data);
+        }
       }
     );
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setErrors({});
+    login({credential, password});
+  };
+
+  const handleDemoClick = (e) => {
+    e.preventDefault();
+    setErrors({});
+    login({
+      credential: 'DemoUser01',
+      password: 'demopassword'
+    });
+  }
 
   return (
     <div className='form-wrapper'>
@@ -60,7 +76,17 @@ function LoginFormModal() {
         <div className='errors'>
           {errors.message && <p>{errors.message}</p>}
         </div>
-        <button type='submit'>Log In</button>
+        <button
+          type='submit'
+          disabled={credential.length < 4 || password.length < 6}
+        >
+          Log In
+        </button>
+        <div>
+          <a href='' onClick={handleDemoClick}>
+            Demo User
+          </a>
+        </div>
       </form>
     </div>
   );

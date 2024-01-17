@@ -1,0 +1,17 @@
+.spot-form-page-wrapper {
+  margin: 0 auto;
+  max-width: 500px;
+}
+
+.spot-form_city-state {
+  /* border: 1px solid red; */
+  display: flex;
+}
+
+.spot-form_price {
+  display: inline-block;
+}
+
+.error {
+  color: red;
+}

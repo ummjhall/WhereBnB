@@ -16,6 +16,8 @@ function ProfileButton({ user }) {
     setShowMenu(!showMenu);
   }
 
+  const closeMenu = () => setShowMenu(false);
+
   useEffect(() => {
     if (!showMenu) return;
     const closeMenu = (e) => {
@@ -27,26 +29,23 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener('click', closeMenu);
   }, [showMenu]);
 
-  const closeMenu = () => setShowMenu(false);
-
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
-    // closeMenu();
+    closeMenu();
   };
 
   const ulClassName = 'profile-dropdown' + (showMenu ? '' : ' hidden');
 
   return (
-    <>
-      <button onClick={toggleMenu}>
+    <div id='profile-button-wrapper'>
+      <button id='profile-button' onClick={toggleMenu}>
         <i className='fas fa-user-circle' />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
+            <li>Hello, {user.firstName}</li>
             <li>{user.email}</li>
             <li>
               <button onClick={handleLogout}>Log Out</button>
@@ -54,20 +53,24 @@ function ProfileButton({ user }) {
           </>
         ) : (
           <>
-            <OpenModalMenuItem
-              itemText='Log In'
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
-            <OpenModalMenuItem
-              itemText='Sign Up'
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            />
+            <div>
+              <OpenModalMenuItem
+                itemText='Log In'
+                onItemClick={closeMenu}
+                modalComponent={<LoginFormModal />}
+              />
+            </div>
+            <div>
+              <OpenModalMenuItem
+                itemText='Sign Up'
+                onItemClick={closeMenu}
+                modalComponent={<SignupFormModal />}
+              />
+            </div>
           </>
         )}
       </ul>
-    </>
+    </div>
   );
 }
 

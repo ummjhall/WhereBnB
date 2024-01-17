@@ -12,6 +12,10 @@ button {
   margin: 15px auto 0;
 }
 
+.errors {
+  color: red;
+}
+
 .form-wrapper {
   /* border: 1px solid red; */
   max-width: 1000px;
@@ -27,6 +31,6 @@ button {
   display: block;
 }
 
-.errors {
-  color: red;
+.page-left {
+  margin-left: 40px;
 }

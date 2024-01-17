@@ -1,8 +1,11 @@
 import { RouterProvider, createBrowserRouter, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Navigation from './components/Navigation/Navigation.jsx';
 import * as sessionActions from './store/session.js';
+import Navigation from './components/Navigation/Navigation.jsx';
+import Spots from './components/Spots/Spots.jsx';
+import SpotDetail from './components/Spots/SpotDetail.jsx';
+import SpotForm from './components/Spots/SpotForm.jsx';
 
 const router = createBrowserRouter([
   {
@@ -10,7 +13,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <h1>Welcome</h1>
+        element: <Spots />
+      },
+      {
+        path: '/spots/:spotId',
+        element: <SpotDetail />
+      },
+      {
+        path: '/spots/new',
+        element: <SpotForm />
+      },
+      {
+        path: '*',
+        element: <h2>Page Not Found</h2>
       }
     ]
   }

@@ -1,4 +1,40 @@
+.header-wrapper {
+  align-content: center;
+  /* border: 1px solid red;  */
+  display: flex;
+  justify-content: space-between;
+  max-width: 100%;
+  /* padding: 5px; */
+}
+
 .hidden {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: none;
+}
+
+#logo {
+  /* border: 3px solid red; */
+  height: 50px;
+  margin: 0 0 0 40px;
+  padding: 0;
+  width: 140px;
+}
+
+.header_right-wrapper {
+  /* border: 1px solid red; */
+  display: flex;
+}
+
+#profile-button-wrapper {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+}
+
+#profile-button {
+  /* border: 3px solid red; */
+  height: 50px;
+  margin: 0 40px 0 0;
+  padding: 0;
+  width: 50px;
 }

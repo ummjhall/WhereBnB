@@ -15,25 +15,25 @@ module.exports = {
     await Review.bulkCreate([
       {
         spotId: 1,    // Aunt May's House
-        userId: 2,    // Iron Man
+        userId: 3,    // Iron Man
         review: 'Worth it',
         stars: 5
       },
       {
         spotId: 2,    // Stark Tower
-        userId: 3,    // Captain America
+        userId: 4,    // Captain America
         review: 'A little over the top',
-        stars: 3
+        stars: 2
       },
       {
         spotId: 3,    // Cap's Apartment
-        userId: 1,    // Spider-Man
+        userId: 2,    // Spider-Man
         review: 'Nice place, I like it',
         stars: 5
       },
       {
         spotId: 2,    // Stark Tower
-        userId: 1,    // Spider-Man
+        userId: 2,    // Spider-Man
         review: "This place is freakin' amazing!",
         stars: 5
       }
