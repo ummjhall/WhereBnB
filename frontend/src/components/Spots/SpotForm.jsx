@@ -110,6 +110,7 @@ function SpotForm() {
             {hasSubmitted && validationErrors.country && `${validationErrors.country}`}
           </span>
           <input
+            className='spot-form_country'
             type='text'
             placeholder='Country'
             value={country}
@@ -121,6 +122,7 @@ function SpotForm() {
             {hasSubmitted && validationErrors.address && `${validationErrors.address}`}
           </span>
           <input
+            className='spot-form_address'
             type='text'
             placeholder='Address'
             value={address}
@@ -134,6 +136,7 @@ function SpotForm() {
                 {hasSubmitted && validationErrors.city && `${validationErrors.city}`}
               </span>
               <input
+                className='spot-form_city'
                 type='text'
                 placeholder='City'
                 value={city}
@@ -141,13 +144,14 @@ function SpotForm() {
               />
             </label>
           </span>
-          <span>,</span>
+          <span className='spot-form_city-state-separator'>,</span>
           <span>
             <label>State{' '}
               <span className='error'>
                 {hasSubmitted && validationErrors.state && `${validationErrors.state}`}
               </span>
               <input
+                className='spot-form_state'
                 type='text'
                 placeholder='STATE'
                 value={state}
@@ -161,6 +165,7 @@ function SpotForm() {
         <h2>Describe your place to guests</h2>
         <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.</p>
         <textarea
+          className='spot-form_description'
           placeholder='Please write at least 30 characters'
           value={description}
           onChange={e => setDescription(e.target.value)}
@@ -173,6 +178,7 @@ function SpotForm() {
         <h2>Create a title for your spot</h2>
         <p>Catch guests&apos; attention with a spot title that highlights what makes your place special.</p>
         <input
+          className='spot-form_title'
           type='text'
           placeholder='Name of your spot'
           value={title}
@@ -205,6 +211,7 @@ function SpotForm() {
         <h2>Liven up your spot with photos</h2>
         <p>Submit a link to at least one photo to publish your spot.</p>
         <input
+          className='spot-form_images'
           type='text'
           placeholder='Preview Image URL'
           value={previewImage}
@@ -214,6 +221,7 @@ function SpotForm() {
           {hasSubmitted && validationErrors.previewImage && `${validationErrors.previewImage}`}
         </div>
         <input
+          className='spot-form_images'
           type='text'
           placeholder='Image URL'
           value={image2}
@@ -223,6 +231,7 @@ function SpotForm() {
           {hasSubmitted && validationErrors.image2 && `${validationErrors.image2}`}
         </div>
         <input
+          className='spot-form_images'
           type='text'
           placeholder='Image URL'
           value={image3}
@@ -232,6 +241,7 @@ function SpotForm() {
           {hasSubmitted && validationErrors.image3 && `${validationErrors.image3}`}
         </div>
         <input
+          className='spot-form_images'
           type='text'
           placeholder='Image URL'
           value={image4}
@@ -241,6 +251,7 @@ function SpotForm() {
           {hasSubmitted && validationErrors.image4 && `${validationErrors.image4}`}
         </div>
         <input
+          className='spot-form_images'
           type='text'
           placeholder='Image URL'
           value={image5}
@@ -251,12 +262,15 @@ function SpotForm() {
         </div>
         <hr />
         {/* *** Submit *** */}
-        <button
-          type='submit'
-          disabled={hasSubmitted && Object.values(validationErrors).length}
-        >
-          Create Spot
-        </button>
+        <div className='spot-form_submit-wrapper'>
+          <button
+            className='spot-form_submit'
+            type='submit'
+            disabled={hasSubmitted && Object.values(validationErrors).length}
+          >
+            Create Spot
+          </button>
+        </div>
       </form>
     </div>
   );

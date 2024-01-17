@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import ProfileButton from './ProfileButton';
-import logo from '../../../../images/logo.png';
+import logo from '../../../../images/logo3.png';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
@@ -11,7 +11,7 @@ function Navigation({ isLoaded }) {
     <>
       <div className='header-wrapper'>
         <div>
-          <NavLink to="/"><img id='logo' src={logo} alt='logo' /></NavLink>
+          <NavLink to="/"><img className='logo' src={logo} alt='logo' /></NavLink>
         </div>
         <div className='header_right-wrapper'>
           {sessionUser && (
@@ -20,7 +20,7 @@ function Navigation({ isLoaded }) {
             </Link>
           )}
           {isLoaded && (
-            <span>
+            <span className='profile-button-container'>
               <ProfileButton user={sessionUser} />
             </span>
           )}
