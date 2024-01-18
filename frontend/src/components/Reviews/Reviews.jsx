@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpotReviews } from '../../store/reviews';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import ReviewFormModal from './ReviewFormModal';
 
 function Reviews({ spot }) {
   const spotReviews = useSelector(state => state.reviews[spot.id]?.spotReviews);
@@ -26,7 +28,10 @@ function Reviews({ spot }) {
   return (
     <div>
       {(user && !hasPosted && user.id !== spot.Owner.id) && (
-        <button type='button'>Post Your Review</button>)
+        <OpenModalButton
+          buttonText='Post Your Review'
+          modalComponent={<ReviewFormModal />}
+        />)
       }
       {(user && user.id !== spot.Owner.id && !reviewsArray) && (
         <div>
