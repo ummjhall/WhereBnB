@@ -54,6 +54,10 @@
   z-index: 1;
 }
 
+.profile-dropdown_manage-spots:hover {
+  cursor: pointer;
+}
+
 .profile-dropdown_login {
   margin-bottom: 10px;
 }

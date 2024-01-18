@@ -6,6 +6,7 @@ import Navigation from './components/Navigation/Navigation.jsx';
 import Spots from './components/Spots/Spots.jsx';
 import SpotDetail from './components/Spots/SpotDetail.jsx';
 import SpotForm from './components/Spots/SpotForm.jsx';
+import ManageSpots from './components/Spots/ManageSpots.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: '/spots/new',
         element: <SpotForm />
+      },
+      {
+        path: '/spots/current',
+        element: <ManageSpots />
       },
       {
         path: '*',

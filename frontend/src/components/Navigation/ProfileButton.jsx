@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
@@ -10,6 +11,7 @@ function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [ showMenu, setShowMenu ] = useState(false);
   const ulRef = useRef();
+  const navigate = useNavigate();
 
   const toggleMenu = (e) => {
     e.stopPropagation();
@@ -47,6 +49,14 @@ function ProfileButton({ user }) {
           <>
             <p className='profile-dropdown_greeting'>Hello, {user.firstName}</p>
             <div className='profile-dropdown_email'>{user.email}</div>
+            <hr />
+            <div
+              className='profile-dropdown_manage-spots'
+              onClick={() => navigate('/spots/current')}
+            >
+              Manage Spots
+            </div>
+            <hr />
             <div>
               <button onClick={handleLogout}>Log Out</button>
             </div>
