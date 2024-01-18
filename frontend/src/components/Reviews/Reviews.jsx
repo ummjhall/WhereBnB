@@ -8,7 +8,13 @@ function Reviews({ spot }) {
   const dispatch = useDispatch();
 
   let reviewsArray;
-  if (spotReviews) reviewsArray = Object.values(spotReviews);
+  let hasPosted = false;
+  if (spotReviews) {
+    reviewsArray = Object.values(spotReviews);
+    reviewsArray.forEach(review => {
+      if (user && user.id === review.userId) hasPosted = true;
+    });
+  }
 
   const months = ['January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'];
@@ -17,8 +23,16 @@ function Reviews({ spot }) {
     dispatch(getSpotReviews(spot.id));
   }, [dispatch, spot.id]);
 
-  return spotReviews ? (
+  return (
     <div>
+      {(user && !hasPosted && user.id !== spot.Owner.id) && (
+        <button type='button'>Post Your Review</button>)
+      }
+      {(user && user.id !== spot.Owner.id && !reviewsArray) && (
+        <div>
+          Be the first to post a review!
+        </div>)
+      }
       <div>
         {reviewsArray && reviewsArray.map(review => (
           <div key={review.id}>
@@ -35,11 +49,7 @@ function Reviews({ spot }) {
         ))}
       </div>
     </div>
-  ) : user && user.id !== spot.Owner.id ? (
-    <div>
-      Be the first to post a review!
-    </div>
-  ) : null;
+  );
 }
 
 export default Reviews;
