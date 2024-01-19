@@ -3,7 +3,7 @@ import './Spots.css';
 
 function SpotTile({ spot }) {
   return (
-    <Link to={`spots/${spot.id}`} className='spot-tile tooltip'>
+    <Link to={`/spots/${spot.id}`} className='spot-tile tooltip'>
       <span className='tooltip-text'>{spot.name}</span>
       <img className='spot-tile-img' src={spot.previewImage} style={{width: '315px', height: '211px'}}/>
       <div className='spot-tile_info-span'>
