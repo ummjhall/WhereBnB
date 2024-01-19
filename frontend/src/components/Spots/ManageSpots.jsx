@@ -29,7 +29,7 @@ function ManageSpots() {
       </div>
       <div className='spot-tile-wrapper'>
         {user && spotsArray && spotsArray.map(spot => (
-          <SpotTile key={spot.id} spot={spot}/>
+          <SpotTile key={spot.id} spot={spot} type='manage'/>
         ))}
       </div>
     </div>

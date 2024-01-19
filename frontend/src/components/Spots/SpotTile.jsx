@@ -1,7 +1,17 @@
 import { Link } from 'react-router-dom';
 import './Spots.css';
 
-function SpotTile({ spot }) {
+function SpotTile({ spot, type }) {
+  const handleUpdateClick = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDeleteClick = (e) => {
+    e.preventDefault();
+  };
+
+
+
   return (
     <Link to={`/spots/${spot.id}`} className='spot-tile tooltip'>
       <span className='tooltip-text'>{spot.name}</span>
@@ -13,6 +23,12 @@ function SpotTile({ spot }) {
       <div>
         ${spot.price} night
       </div>
+      {type === 'manage' && (
+        <div className='spot-tile_manage-buttons'>
+          <button type='button' onClick={handleUpdateClick}>Update</button>
+          <button type='button' onClick={handleDeleteClick}>Delete</button>
+        </div>
+      )}
     </Link>
   );
 }
