@@ -64,6 +64,18 @@ export const createSpot = (spotFormData) => async dispatch => {
   return spotData;
 };
 
+export const updateSpot = (spotId, spotFormData) => async dispatch => {
+  const res = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'PUT',
+    body: JSON.stringify(spotFormData)
+  });
+
+  const spotData = await res.json();
+  if (res.ok)
+    dispatch(addSpot(spotData));
+  return spotData;
+};
+
 const initialState = {};
 
 const spotsReducer = (state = initialState, action) => {
