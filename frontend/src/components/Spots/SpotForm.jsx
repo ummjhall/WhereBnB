@@ -5,7 +5,7 @@ import { createSpot } from '../../store/spots';
 import { csrfFetch } from '../../store/csrf';
 import './SpotForm.css';
 
-function SpotForm() {
+function SpotForm({ type }) {
   const [ country, setCountry ] = useState('');
   const [ address, setAddress ] = useState('');
   const [ city, setCity ] = useState('');
@@ -100,7 +100,7 @@ function SpotForm() {
 
   return (
     <div className='spot-form-page-wrapper'>
-      <h1>Create a New Spot</h1>
+      <h1>{type === 'update' ? 'Update your Spot' : 'Create a New Spot'}</h1>
       <h2>Where&apos;s your place located?</h2>
       <p>Guests will only get your exact address once they booked a reservation.</p>
       <form onSubmit={handleSubmit}>
@@ -268,7 +268,7 @@ function SpotForm() {
             type='submit'
             disabled={hasSubmitted && Object.values(validationErrors).length}
           >
-            Create Spot
+            {type === 'update' ? 'Update your Spot' : 'Create Spot'}
           </button>
         </div>
       </form>

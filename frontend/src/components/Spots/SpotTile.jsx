@@ -1,16 +1,17 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Spots.css';
 
 function SpotTile({ spot, type }) {
+  const navigate = useNavigate();
+
   const handleUpdateClick = (e) => {
     e.preventDefault();
+    navigate(`/spots/${spot.id}/edit`);
   };
 
   const handleDeleteClick = (e) => {
     e.preventDefault();
   };
-
-
 
   return (
     <Link to={`/spots/${spot.id}`} className='spot-tile tooltip'>
