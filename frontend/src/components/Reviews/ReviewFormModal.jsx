@@ -10,6 +10,7 @@ function ReviewFormModal({ spot }) {
   const [ rating, setRating ] = useState(0);
   const [ activeRating, setActiveRating ] = useState(rating || 0);
   const [ disabled, setDisabled ] = useState(true);
+  const [ serverErrors, setServerErrors ] = useState({});
   const { closeModal } = useModal();
   const dispatch = useDispatch();
 
@@ -28,7 +29,14 @@ function ReviewFormModal({ spot }) {
       stars: rating
     };
 
-    await dispatch(createReview(spot.id, reviewData));
+    const res = await dispatch(createReview(spot.id, reviewData));
+    console.log('************');
+    console.log(res);
+    if (res.message) {
+      const errors = res;
+      setServerErrors(errors);
+      return;
+    }
     await dispatch(getSpotReviews(spot.id));
     await dispatch(getSpotDetails(spot.id));
     closeModal();
@@ -37,6 +45,7 @@ function ReviewFormModal({ spot }) {
   return (
     <div>
       <h1 className='review-form-heading'>How was your stay?</h1>
+      {serverErrors.message && (<div>{`${serverErrors.message}`}</div>)}
       <form onSubmit={handleSubmit}>
         <textarea
           className='review-form-textarea'
