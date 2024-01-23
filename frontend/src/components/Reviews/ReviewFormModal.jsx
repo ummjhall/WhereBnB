@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createReview, getSpotReviews } from '../../store/reviews';
+import { getSpotDetails } from '../../store/spots';
 import { useModal } from '../../context/Modal';
 import './ReviewFormModal.css';
 
@@ -29,6 +30,7 @@ function ReviewFormModal({ spot }) {
 
     await dispatch(createReview(spot.id, reviewData));
     await dispatch(getSpotReviews(spot.id));
+    await dispatch(getSpotDetails(spot.id));
     closeModal();
   };
 
