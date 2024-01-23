@@ -30,7 +30,7 @@ function Reviews({ spot }) {
       {(user && !hasPosted && user.id !== spot.Owner.id) && (
         <OpenModalButton
           buttonText='Post Your Review'
-          modalComponent={<ReviewFormModal />}
+          modalComponent={<ReviewFormModal spot={spot} />}
         />)
       }
       {(user && user.id !== spot.Owner.id && !reviewsArray) && (

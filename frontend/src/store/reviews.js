@@ -1,6 +1,7 @@
 import { csrfFetch } from './csrf';
 
 const LOAD_REVIEWS = 'reviews/loadReviews';
+const ADD_REVIEW = 'reviews/addReview';
 
 const loadReviews = (reviewsData) => {
   return {
@@ -9,13 +10,32 @@ const loadReviews = (reviewsData) => {
   };
 };
 
+const addReview = (reviewData) => {
+  return {
+    type: ADD_REVIEW,
+    reviewData
+  };
+};
+
 export const getSpotReviews = (spotId) => async dispatch => {
   const res = await csrfFetch(`/api/spots/${spotId}/reviews`);
 
-  const reviewsData = await res.json();
+  const reviews = await res.json();
   if (res.ok)
-    dispatch(loadReviews(reviewsData));
-  return reviewsData;
+    dispatch(loadReviews(reviews));
+  return reviews;
+};
+
+export const createReview = (spotId, reviewData) => async dispatch => {
+  const res = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+    method: 'POST',
+    body: JSON.stringify(reviewData)
+  });
+
+  const review = await res.json();
+  if(res.ok)
+    dispatch(addReview(review))
+  return review;
 };
 
 const initialState = {};

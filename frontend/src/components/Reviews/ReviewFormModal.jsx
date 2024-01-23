@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { createReview, getSpotReviews } from '../../store/reviews';
+import { useModal } from '../../context/Modal';
 import './ReviewFormModal.css';
 
-function ReviewFormModal() {
+function ReviewFormModal({ spot }) {
   const [ review, setReview ] = useState('');
   const [ rating, setRating ] = useState(0);
   const [ activeRating, setActiveRating ] = useState(rating || 0);
   const [ disabled, setDisabled ] = useState(true);
+  const { closeModal } = useModal();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (rating === 0 || review.length < 10)
@@ -14,9 +19,18 @@ function ReviewFormModal() {
       setDisabled(false);
   }, [rating, review]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  }
+
+    const reviewData = {
+      review,
+      stars: rating
+    };
+
+    await dispatch(createReview(spot.id, reviewData));
+    await dispatch(getSpotReviews(spot.id));
+    closeModal();
+  };
 
   return (
     <div>
