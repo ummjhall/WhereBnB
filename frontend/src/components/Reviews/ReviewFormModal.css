@@ -33,3 +33,11 @@
   width: 350px;
   height: 3em;
 }
+
+.filled {
+  color: gold;
+}
+
+.empty {
+  color: gray;
+}
