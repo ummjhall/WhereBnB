@@ -9,10 +9,14 @@ function Reviews({ spot }) {
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
-  let reviewsArray;
+  const reviewsArray = [];
   let hasPosted = false;
   if (spotReviews) {
-    reviewsArray = Object.values(spotReviews);
+    const unorderedReviews = Object.values(spotReviews);
+    // Display reviews newest first
+    for (let i = unorderedReviews.length - 1; i >= 0; i--) {
+      reviewsArray.push(unorderedReviews[i]);
+    }
     reviewsArray.forEach(review => {
       if (user && user.id === review.userId) hasPosted = true;
     });
