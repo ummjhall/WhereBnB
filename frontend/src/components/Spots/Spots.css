@@ -59,3 +59,16 @@
 .manage-spots-page-wrapper {
   margin: auto 40px;
 }
+
+
+
+
+/* **************************************** DELETE SPOT *****************************************/
+
+.spot-delete_confirm {
+  background-color: red;
+}
+
+.spot-delete_cancel {
+  background-color: darkgray;
+}

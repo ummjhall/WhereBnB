@@ -30,8 +30,6 @@ function ReviewFormModal({ spot }) {
     };
 
     const res = await dispatch(createReview(spot.id, reviewData));
-    console.log('************');
-    console.log(res);
     if (res.message) {
       const errors = res;
       setServerErrors(errors);
