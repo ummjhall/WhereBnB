@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSpotReviews } from '../../store/reviews';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import ReviewFormModal from './ReviewFormModal';
+import ReviewDeleteModal from './ReviewDeleteModal';
 
 function Reviews({ spot }) {
   const spotReviews = useSelector(state => state.reviews[spot.id]?.spotReviews);
@@ -53,6 +54,16 @@ function Reviews({ spot }) {
             </div>
             <div>
               {review.review}
+            </div>
+            <div>
+              {user.id === review.userId && (
+                <div>
+                  <OpenModalButton
+                    buttonText='Delete'
+                    modalComponent={<ReviewDeleteModal review={review} />}
+                  />
+                </div>
+              )}
             </div>
           </div>
         ))}

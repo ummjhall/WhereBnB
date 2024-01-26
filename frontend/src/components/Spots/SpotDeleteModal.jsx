@@ -8,9 +8,8 @@ function SpotDeleteModal({ spotId }) {
   const dispatch = useDispatch();
 
   const handleDelete = async () => {
-    console.log('*************');
+    // Cleanup: Just dispatch this, get rid of async
     const res = await dispatch(deleteSpot(spotId));
-    console.log(res);
     closeModal();
   };
 

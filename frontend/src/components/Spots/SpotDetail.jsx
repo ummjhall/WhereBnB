@@ -66,7 +66,7 @@ function SpotDetail() {
           : `${spot.avgStarRating.toFixed(1)} · ${spot.numReviews} review${spot.numReviews > 1 ? 's' : ''}`}
         </h2>
       </div>
-      <Reviews spot={spot} />
+      <Reviews spot={spot}/>
     </div>
   );
 }
