@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
-// import './LoginForm.css';
+import './LoginForm.css';
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -77,12 +77,13 @@ function LoginFormModal() {
           {errors.message && <p>{errors.message}</p>}
         </div>
         <button
+          className='login-button'
           type='submit'
           disabled={credential.length < 4 || password.length < 6}
         >
           Log In
         </button>
-        <div>
+        <div className='demo-button'>
           <a href='' onClick={handleDemoClick}>
             Demo User
           </a>

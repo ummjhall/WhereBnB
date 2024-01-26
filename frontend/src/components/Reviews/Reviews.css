@@ -1,0 +1,9 @@
+/* **************************************** DELETE REVIEW *****************************************/
+
+.review-delete_confirm {
+  background-color: red;
+}
+
+.review-delete_cancel {
+  background-color: darkgray;
+}

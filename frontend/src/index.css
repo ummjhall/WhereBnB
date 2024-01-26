@@ -27,6 +27,10 @@ button {
   justify-content: center;
 }
 
+.hover-link:hover {
+  cursor: pointer;
+}
+
 .input-wrapper {
   display: block;
 }

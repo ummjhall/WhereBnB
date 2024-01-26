@@ -3,13 +3,54 @@
   max-width: 500px;
 }
 
+.spot-form_country,
+.spot-form_address,
+.spot-form_city-state,
+.spot-form_title,
+.spot-form_price,
+.spot-form_images {
+  width: 100%;
+}
+
+/* FIX THIS IT'S NOT REALLY LINED UP ON THE RIGHT */
+/* MAYBE TRY MAKING A FLEXBOX DIV INSIDE OF THE FORM */
 .spot-form_city-state {
   /* border: 1px solid red; */
+  width: 508px;
   display: flex;
+  justify-content: space-between;
+}
+
+.spot-form_city {
+  width: 300px;
+}
+
+.spot-form_state {
+  width: 175px;
+}
+
+.spot-form_city-state-separator {
+  align-self: flex-end;
+  margin: 0 5px;
+}
+
+.spot-form_description {
+  width: 100%;
+  height: 8em;
 }
 
 .spot-form_price {
   display: inline-block;
+}
+
+.spot-form_submit-wrapper {
+  display: flex;
+}
+
+.spot-form_submit {
+  background-color: red;
+  color: white;
+  justify-self: center;
 }
 
 .error {

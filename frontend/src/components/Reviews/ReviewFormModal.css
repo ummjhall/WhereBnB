@@ -1,0 +1,43 @@
+/* .review-form-page-wrapper {
+
+} */
+
+.review-form-heading {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.review-form-textarea {
+  margin: 0 15px;
+  width: 350px;
+  height: 8em;
+}
+
+.review-form-star-container {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.review-form-star-rating {
+  margin-right: 10px;
+}
+
+.review-form-submit {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.review-form-submit_button {
+  width: 350px;
+  height: 3em;
+}
+
+.filled {
+  color: gold;
+}
+
+.empty {
+  color: gray;
+}

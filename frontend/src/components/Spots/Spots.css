@@ -19,6 +19,12 @@
   text-decoration: none;
 }
 
+.spot-tile-img {
+  width: 100%;
+  /* max-height: 211px; */
+  object-fit: cover;
+}
+
 .spot-tile_info-span {
   display: flex;
   justify-content: space-between;
@@ -44,4 +50,25 @@
 
 .tooltip:hover .tooltip-text {
   visibility: visible;
+}
+
+
+
+/* **************************************** MANAGE SPOTS *****************************************/
+
+.manage-spots-page-wrapper {
+  margin: auto 40px;
+}
+
+
+
+
+/* **************************************** DELETE SPOT *****************************************/
+
+.spot-delete_confirm {
+  background-color: red;
+}
+
+.spot-delete_cancel {
+  background-color: darkgray;
 }
