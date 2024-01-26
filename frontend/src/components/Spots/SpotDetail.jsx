@@ -8,6 +8,7 @@ import './SpotDetail.css';
 function SpotDetail() {
   const { spotId } = useParams();
   const spot = useSelector(state => state.spots[spotId]);
+  const reviews = useSelector(state => state.reviews);
   const dispatch = useDispatch();
 
   let mainImage;
@@ -19,7 +20,7 @@ function SpotDetail() {
 
   useEffect(() => {
     dispatch(getSpotDetails(spotId));
-  }, [dispatch, spotId]);
+  }, [dispatch, spotId, reviews]);
 
   if (!spot || !spot.Owner || !spot.SpotImages) return null;
 

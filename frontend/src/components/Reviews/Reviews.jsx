@@ -60,7 +60,7 @@ function Reviews({ spot }) {
                 <div>
                   <OpenModalButton
                     buttonText='Delete'
-                    modalComponent={<ReviewDeleteModal review={review} />}
+                    modalComponent={<ReviewDeleteModal review={review} spotId={spot.id} />}
                   />
                 </div>
               )}
