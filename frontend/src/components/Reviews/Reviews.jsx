@@ -56,7 +56,7 @@ function Reviews({ spot }) {
               {review.review}
             </div>
             <div>
-              {user.id === review.userId && (
+              {user && user.id === review.userId && (
                 <div>
                   <OpenModalButton
                     buttonText='Delete'

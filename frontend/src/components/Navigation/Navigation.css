@@ -21,7 +21,7 @@
 .logo {
   /* border: 3px solid red; */
   height: 64px;
-  margin: 0 0 0 40px;
+  margin: 0 20px 0 40px;
   padding: 0;
   width: 118px;
 }
@@ -42,6 +42,7 @@
   margin: 0 40px 0 0;
   padding: 0;
   width: 50px;
+  cursor: pointer;
 }
 
 .profile-dropdown {
