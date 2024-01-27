@@ -1,8 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
-import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import SpotDeleteModal from './SpotDeleteModal';
 import './Spots.css';
-import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 
 function SpotTile({ spot, type }) {
   const navigate = useNavigate();
