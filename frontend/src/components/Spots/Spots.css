@@ -9,6 +9,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   row-gap: 25px;
+  max-width: 1227px;
 }
 
 .spot-tile, .spot-tile-img {
@@ -52,6 +53,16 @@
   visibility: visible;
 }
 
+@media (min-width: 1227px) {
+  .page-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .spot-tile-wrapper {
+    max-width: 1227px;
+  }
+}
 
 
 /* **************************************** MANAGE SPOTS *****************************************/
