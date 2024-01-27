@@ -48,9 +48,14 @@
 }
 
 .spot-form_submit {
-  background-color: red;
-  color: white;
   justify-self: center;
+  box-shadow: 3px 3px gray;
+}
+
+.enabled {
+  background-color: red;
+  box-shadow: 3px 3px black;
+  color: white;
 }
 
 .error {

@@ -30,6 +30,7 @@ function SpotForm({ type }) {
   const [ image5, setImage5 ] = useState(spot?.image5 || '');
   const [ validationErrors, setValidationErrors ] = useState({});
   const [ hasSubmitted, setHasSubmitted ] = useState(false);
+  const disabled = hasSubmitted && Object.values(validationErrors).length;
 
 
   useEffect(() => {
@@ -282,9 +283,9 @@ function SpotForm({ type }) {
         {/* *** Submit *** */}
         <div className='spot-form_submit-wrapper'>
           <button
-            className='spot-form_submit'
+            className={`spot-form_submit ${disabled ? '' : 'enabled'}`}
             type='submit'
-            disabled={hasSubmitted && Object.values(validationErrors).length}
+            disabled={disabled}
           >
             {type === 'update' ? 'Update your Spot' : 'Create Spot'}
           </button>
