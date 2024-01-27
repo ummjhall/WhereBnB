@@ -6,6 +6,7 @@
 
 .spot-detail-page-wrapper {
   margin: 0 120px;
+  max-width: 1000px;
 }
 
 .spot-detail-images-grid-container {
