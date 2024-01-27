@@ -21,6 +21,7 @@ function ManageSpots() {
       <h1>Manage Spots</h1>
       <div>
         <button
+          className='manage-spots_create-button'
           type='button'
           onClick={() => navigate('/spots/new')}
         >

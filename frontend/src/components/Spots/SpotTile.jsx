@@ -26,7 +26,13 @@ function SpotTile({ spot, type }) {
       </Link>
       {type === 'manage' && (
         <div className='spot-tile_manage-buttons'>
-          <button type='button' onClick={handleUpdateClick}>Update</button>
+          <button
+            className='spot-tile_manage-buttons_update'
+            type='button'
+            onClick={handleUpdateClick}
+          >
+            Update
+          </button>
           <OpenModalButton
             buttonText='Delete'
             modalComponent={<SpotDeleteModal spotId={spot.id} />}

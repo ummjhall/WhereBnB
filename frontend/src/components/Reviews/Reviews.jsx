@@ -4,6 +4,7 @@ import { getSpotReviews } from '../../store/reviews';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import ReviewFormModal from './ReviewFormModal';
 import ReviewDeleteModal from './ReviewDeleteModal';
+import './Reviews.css';
 
 function Reviews({ spot }) {
   const spotReviews = useSelector(state => state.reviews[spot.id]?.spotReviews);
@@ -45,14 +46,14 @@ function Reviews({ spot }) {
       }
       <div>
         {reviewsArray && reviewsArray.map(review => (
-          <div key={review.id}>
-            <div>
+          <div className='reviews_review' key={review.id}>
+            <div className='reviews_review_name'>
               {review.User.firstName}
             </div>
-            <div>
+            <div className='reviews_review_date'>
               {`${months[new Date(review.createdAt).getMonth()]} ${review.createdAt.slice(0, 4)}`}
             </div>
-            <div>
+            <div className='reviews_review_message'>
               {review.review}
             </div>
             <div>

@@ -1,5 +1,17 @@
 /* **************************************** DELETE REVIEW *****************************************/
 
+.reviews_review {
+  margin-bottom: 20px;
+}
+
+.reviews_review_name {
+  font-weight: bold;
+}
+
+.reviews_review_date {
+  color: gray;
+}
+
 .review-delete_confirm {
   background-color: red;
 }
