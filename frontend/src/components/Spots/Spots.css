@@ -60,12 +60,19 @@
   margin: auto 40px;
 }
 
+.manage-spots_button {
+  background-color: dimgray;
+  color: white;
+  cursor: pointer;
+  box-shadow: 3px 3px black;
+}
+
 .manage-spots_create-button {
-  margin: 10px auto 20px;
+  margin: 0 auto 30px;
 }
 
 .spot-tile_manage-buttons_update {
-  margin-right: 5px;
+  margin-right: 10px;
 }
 
 
