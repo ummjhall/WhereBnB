@@ -14,8 +14,8 @@ function ReviewDeleteModal({ review, spotId }) {
   };
 
   return (
-    <div>
-      <h1>Confirm Delete</h1>
+    <div className='review-delete-wrapper'>
+      <h1 className='review-delete_title'>Confirm Delete</h1>
       <h2>Are you sure you want to delete this review?</h2>
       <div>
         <button

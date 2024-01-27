@@ -10,6 +10,7 @@ function LoginFormModal() {
   const [ password, setPassword ] = useState('');
   const [ errors, setErrors ] = useState({});
   const { closeModal } = useModal();
+  const disabled = credential.length < 4 || password.length < 6;
 
   const login = (credentials) => {
     dispatch(sessionActions.login(credentials))
@@ -77,9 +78,9 @@ function LoginFormModal() {
           {errors.message && <p>{errors.message}</p>}
         </div>
         <button
-          className='login-button'
+          className={`login-button ${disabled ? '' : 'enabled'}`}
           type='submit'
-          disabled={credential.length < 4 || password.length < 6}
+          disabled={disabled}
         >
           Log In
         </button>

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import SpotDeleteModal from './SpotDeleteModal';
 import './Spots.css';
 
@@ -26,11 +26,19 @@ function SpotTile({ spot, type }) {
       </Link>
       {type === 'manage' && (
         <div className='spot-tile_manage-buttons'>
-          <button type='button' onClick={handleUpdateClick}>Update</button>
-          <OpenModalButton
-            buttonText='Delete'
-            modalComponent={<SpotDeleteModal spotId={spot.id} />}
-          />
+          <button
+            className='manage-spots_button spot-tile_manage-buttons_update'
+            type='button'
+            onClick={handleUpdateClick}
+          >
+            Update
+          </button>
+          <button className='manage-spots_button'>
+            <OpenModalMenuItem
+              itemText='Delete'
+              modalComponent={<SpotDeleteModal spotId={spot.id} />}
+            />
+          </button>
         </div>
       )}
     </div>

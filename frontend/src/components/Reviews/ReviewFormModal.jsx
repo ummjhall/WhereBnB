@@ -15,7 +15,7 @@ function ReviewFormModal({ spot }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (rating === 0 || review.length < 10)
+    if (rating === 0 || review.length < 10 || review.length > 500)
       setDisabled(true);
     else
       setDisabled(false);
@@ -100,7 +100,7 @@ function ReviewFormModal({ spot }) {
         </div>
         <div className='review-form-submit'>
           <button
-            className='review-form-submit_button'
+            className={`review-form-submit_button ${disabled ? '' : 'enabled'}`}
             disabled={disabled}
           >
             Submit Your Review

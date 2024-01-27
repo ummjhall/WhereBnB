@@ -14,8 +14,8 @@
 .spot-tile, .spot-tile-img {
   /* border: 1px solid red; */
   color: black;
-  max-width: 315px;
-  max-height: 300px;
+  max-width: 250px;
+  max-height: 238px;
   text-decoration: none;
 }
 
@@ -60,15 +60,46 @@
   margin: auto 40px;
 }
 
+.manage-spots_button {
+  background-color: dimgray;
+  color: white;
+  cursor: pointer;
+  box-shadow: 3px 3px black;
+}
+
+.manage-spots_create-button {
+  margin: 0 auto 30px;
+}
+
+.spot-tile_manage-buttons_update {
+  margin-right: 10px;
+}
+
 
 
 
 /* **************************************** DELETE SPOT *****************************************/
 
+.spot-delete-wrapper {
+  padding: 30px;
+}
+
+.spot-delete_title {
+  text-align: center;
+}
+
 .spot-delete_confirm {
   background-color: red;
+  box-shadow: 4px 4px black;
+  color: white;
+  width: 100%;
+  height: 4em;
 }
 
 .spot-delete_cancel {
-  background-color: darkgray;
+  background-color: dimgray;
+  box-shadow: 4px 4px black;
+  color: white;
+  width: 100%;
+  height: 4em;
 }

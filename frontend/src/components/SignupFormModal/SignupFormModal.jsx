@@ -55,80 +55,86 @@ function SignupFormModal() {
     <div className='form-wrapper'>
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          First Name
+        {/* <label>
+          First Name */}
           <input
             type='text'
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
+            placeholder='First Name'
             required
           />
-        </label>
+        {/* </label> */}
         <div className='errors'>
           {errors.firstName && <p>{errors.firstName}</p>}
         </div>
-        <label>
-          Last Name
+        {/* <label>
+          Last Name */}
           <input
             type='text'
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
+            placeholder='Last Name'
             required
           />
-        </label>
+        {/* </label> */}
         <div className='errors'>
           {errors.lastName && <p>{errors.lastName}</p>}
         </div>
-        <label>
-          Email
+        {/* <label>
+          Email */}
           <input
             type='text'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder='Email'
             required
           />
-        </label>
+        {/* </label> */}
         <div className='errors'>
           {errors.email && <p>{errors.email}</p>}
         </div>
-        <label>
-          Username
+        {/* <label>
+          Username */}
           <input
             type='text'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            placeholder='Username'
             required
           />
-        </label>
+        {/* </label> */}
         <div className='errors'>
           {errors.username && <p>{errors.username}</p>}
         </div>
-        <label>
-          Password
+        {/* <label>
+          Password */}
           <input
             type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder='Password'
             required
           />
-        </label>
+        {/* </label> */}
         <div className='errors'>
           {errors.password && <p>{errors.password}</p>}
         </div>
-        <label>
-          Confirm Password
+        {/* <label>
+          Confirm Password */}
           <input
             type='password'
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder='Confirm Password'
             required
           />
-        </label>
+        {/* </label> */}
         <div className='errors'>
           {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         </div>
         <button
-          className='signup-button'
+          className={`signup-button ${validationErrors ? '' : 'enabled'}`}
           type='submit'
           disabled={validationErrors}
         >

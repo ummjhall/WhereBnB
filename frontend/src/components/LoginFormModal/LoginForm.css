@@ -6,4 +6,10 @@
 .login-button {
   width: 100%;
   height: 3em;
+  box-shadow: 4px 4px gray;
+}
+
+.enabled {
+  background-color: orangered;
+  box-shadow: 4px 4px black;
 }

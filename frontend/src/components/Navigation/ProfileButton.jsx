@@ -35,6 +35,7 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+    navigate('/');
   };
 
   const ulClassName = 'profile-dropdown' + (showMenu ? '' : ' hidden');
@@ -42,6 +43,7 @@ function ProfileButton({ user }) {
   return (
     <div className='profile-button-wrapper'>
       <button className='profile-button' onClick={toggleMenu}>
+        <i className='fas fa-bars profile-button_bars' />
         <i className='fas fa-user-circle' />
       </button>
       <div className={ulClassName} ref={ulRef}>
@@ -70,7 +72,7 @@ function ProfileButton({ user }) {
                 modalComponent={<LoginFormModal />}
               />
             </div>
-            <div className='hover-link'>
+            <div className='profile-dropdown_signup hover-link'>
               <OpenModalMenuItem
                 itemText='Sign Up'
                 onItemClick={closeMenu}
