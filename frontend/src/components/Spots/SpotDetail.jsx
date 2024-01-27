@@ -45,13 +45,16 @@ function SpotDetail() {
           <p>{spot.description}</p>
         </div>
         <div className='spot-detail-callout'>
-          <div>${spot.price} night</div>
-          <div>
-            ★ {!spot.avgStarRating
-            ? 'New'
-            : `${spot.avgStarRating.toFixed(1)} · ${spot.numReviews} review${spot.numReviews > 1 ? 's' : ''}`}
+          <div className='spot-detail-callout_info'>
+            <span>${spot.price} night</span>
+            <span>
+              ★ {!spot.avgStarRating
+              ? 'New'
+              : `${spot.avgStarRating.toFixed(1)} · ${spot.numReviews} review${spot.numReviews > 1 ? 's' : ''}`}
+            </span>
           </div>
           <button
+            className='spot-detail-callout_reserve'
             type='button'
             onClick={() => alert('Feature Coming Soon...')}
           >

@@ -1,5 +1,9 @@
 /* **************************************** DELETE REVIEW *****************************************/
 
+.reviews_post-button {
+  margin: 0 auto 20px;
+}
+
 .reviews_review {
   margin-bottom: 20px;
 }

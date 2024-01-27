@@ -34,10 +34,12 @@ function Reviews({ spot }) {
   return (
     <div>
       {(user && !hasPosted && user.id !== spot.Owner.id) && (
-        <OpenModalButton
-          buttonText='Post Your Review'
-          modalComponent={<ReviewFormModal spot={spot} />}
-        />)
+        <div className='reviews_post-button'>
+          <OpenModalButton
+            buttonText='Post Your Review'
+            modalComponent={<ReviewFormModal spot={spot} />}
+          />
+        </div>)
       }
       {(user && user.id !== spot.Owner.id && !reviewsArray) && (
         <div>
