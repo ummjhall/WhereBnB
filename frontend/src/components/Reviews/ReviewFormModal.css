@@ -32,6 +32,12 @@
 .review-form-submit_button {
   width: 350px;
   height: 3em;
+  box-shadow: 4px 4px gray;
+}
+
+.enabled {
+  background-color: orangered;
+  box-shadow: 4px 4px black;
 }
 
 .filled {

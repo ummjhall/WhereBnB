@@ -6,4 +6,5 @@
 
 .enabled {
   background-color: orangered;
+  box-shadow: 4px 4px black;
 }
