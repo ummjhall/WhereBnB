@@ -16,6 +16,10 @@
   color: gray;
 }
 
+.review-delete-wrapper {
+  padding: 30px;
+}
+
 .review-delete_confirm {
   background-color: red;
 }

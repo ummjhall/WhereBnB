@@ -13,7 +13,7 @@ function SpotDeleteModal({ spotId }) {
   };
 
   return (
-    <div>
+    <div className='spot-delete-wrapper'>
       <h1>Confirm Delete</h1>
       <h2>Are you sure you want to remove this spot?</h2>
       <div>

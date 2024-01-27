@@ -73,6 +73,10 @@
 
 /* **************************************** DELETE SPOT *****************************************/
 
+.spot-delete-wrapper {
+  padding: 30px;
+}
+
 .spot-delete_confirm {
   background-color: red;
 }
