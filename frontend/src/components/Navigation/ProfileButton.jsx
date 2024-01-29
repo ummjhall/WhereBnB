@@ -76,7 +76,7 @@ function ProfileButton({ user }) {
               <OpenModalMenuItem
                 itemText='Sign Up'
                 onItemClick={closeMenu}
-                modalComponent={<SignupFormModal />}
+                modalComponent={<SignupFormModal navigateHome={() => navigate('/')} />}
               />
             </div>
           </>
