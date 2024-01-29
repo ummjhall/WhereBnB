@@ -46,7 +46,10 @@ function SpotDetail() {
         </div>
         <div className='spot-detail-callout'>
           <div className='spot-detail-callout_info'>
-            <span>${spot.price} night</span>
+            <span>
+              <span className='spot-detail-price'>${spot.price}</span>
+              <span>{' '}night</span>
+            </span>
             <span>
               ★ {!spot.avgStarRating
               ? 'New'
