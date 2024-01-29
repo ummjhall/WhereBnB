@@ -32,7 +32,6 @@ function SpotForm({ type }) {
   const [ hasSubmitted, setHasSubmitted ] = useState(false);
   const disabled = hasSubmitted && Object.values(validationErrors).length;
 
-
   useEffect(() => {
     const errors = {};
 
