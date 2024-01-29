@@ -20,9 +20,12 @@ function SpotTile({ spot, type }) {
           <span>{spot.city}, {spot.state}</span>
           <span>★ {!spot.avgRating ? 'New' : spot.avgRating.toFixed(1)}</span>
         </div>
-        <div>
-          ${spot.price} night
-        </div>
+        <span className='spot-tile_price'>
+          ${spot.price}
+        </span>
+        <span>
+          {' '}night
+        </span>
       </Link>
       {type === 'manage' && (
         <div className='spot-tile_manage-buttons'>
