@@ -59,8 +59,8 @@ function ProfileButton({ user }) {
               Manage Spots
             </div>
             <hr />
-            <div>
-              <button onClick={handleLogout}>Log Out</button>
+            <div className='profile-dropdown_logout-container'>
+              <button className='profile-dropdown_logout' onClick={handleLogout}>Log Out</button>
             </div>
           </>
         ) : (
