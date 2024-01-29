@@ -24,6 +24,7 @@
   margin: 0 20px 0 40px;
   padding: 0;
   width: 118px;
+  border-radius: 10px;
 }
 
 .profile-button-container {
@@ -37,7 +38,7 @@
 }
 
 .profile-button {
-  /* border: 3px solid red; */
+  border: 2px solid black;
   border-radius: 30px;
   display: flex;
   align-items: center;

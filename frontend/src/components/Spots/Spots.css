@@ -24,6 +24,7 @@
   width: 100%;
   /* max-height: 211px; */
   object-fit: cover;
+  border-radius: 10px;
 }
 
 .spot-tile_info-span {
@@ -64,6 +65,12 @@
   }
 }
 
+/* **************************************** SPOT DETAIL *****************************************/
+
+.sdi-main-image,
+.sdi-sub-image {
+  border-radius: 10px;
+}
 
 /* **************************************** MANAGE SPOTS *****************************************/
 
@@ -85,9 +92,6 @@
 .spot-tile_manage-buttons_update {
   margin-right: 10px;
 }
-
-
-
 
 /* **************************************** DELETE SPOT *****************************************/
 
