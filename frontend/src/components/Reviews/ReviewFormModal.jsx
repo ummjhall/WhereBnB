@@ -11,18 +11,20 @@ function ReviewFormModal({ spot }) {
   const [ activeRating, setActiveRating ] = useState(rating || 0);
   const [ disabled, setDisabled ] = useState(true);
   const [ serverErrors, setServerErrors ] = useState({});
+  const [ hasSubmitted, setHasSubmitted ] = useState(false);
   const { closeModal } = useModal();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (rating === 0 || review.length < 10 || review.length > 500)
+    if (rating === 0 || review.length < 10 || review.length > 500 || hasSubmitted)
       setDisabled(true);
     else
       setDisabled(false);
-  }, [rating, review]);
+  }, [rating, review, hasSubmitted]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setHasSubmitted(true);
 
     const reviewData = {
       review,
@@ -33,6 +35,7 @@ function ReviewFormModal({ spot }) {
     if (res.message) {
       const errors = res;
       setServerErrors(errors);
+      setHasSubmitted(false);
       return;
     }
     await dispatch(getSpotReviews(spot.id));

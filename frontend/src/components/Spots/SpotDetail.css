@@ -77,6 +77,10 @@
   justify-content: space-between;
 }
 
+.spot-detail-price {
+  font-weight: bold;
+}
+
 .spot-detail-callout_reserve {
   background-color:orangered;
   width: 100%;
