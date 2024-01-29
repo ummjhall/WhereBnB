@@ -41,7 +41,7 @@ function Reviews({ spot }) {
           />
         </button>)
       }
-      {(user && user.id !== spot.Owner.id && !reviewsArray) && (
+      {(user && user.id !== spot.Owner.id && !reviewsArray.length) && (
         <div>
           Be the first to post a review!
         </div>)
