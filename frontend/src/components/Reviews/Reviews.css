@@ -16,6 +16,13 @@
   color: gray;
 }
 
+.reviews_button {
+  background-color: dimgray;
+  color: white;
+  cursor: pointer;
+  box-shadow: 3px 3px black;
+}
+
 .review-delete-wrapper {
   padding: 30px;
 }

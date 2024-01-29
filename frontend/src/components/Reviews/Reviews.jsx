@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpotReviews } from '../../store/reviews';
-import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import ReviewFormModal from './ReviewFormModal';
 import ReviewDeleteModal from './ReviewDeleteModal';
 import './Reviews.css';
@@ -34,12 +34,12 @@ function Reviews({ spot }) {
   return (
     <div>
       {(user && !hasPosted && user.id !== spot.Owner.id) && (
-        <div className='reviews_post-button'>
-          <OpenModalButton
-            buttonText='Post Your Review'
+        <button className='reviews_button reviews_post-button'>
+          <OpenModalMenuItem
+            itemText='Post Your Review'
             modalComponent={<ReviewFormModal spot={spot} />}
           />
-        </div>)
+        </button>)
       }
       {(user && user.id !== spot.Owner.id && !reviewsArray) && (
         <div>
@@ -61,10 +61,12 @@ function Reviews({ spot }) {
             <div>
               {user && user.id === review.userId && (
                 <div>
-                  <OpenModalButton
-                    buttonText='Delete'
-                    modalComponent={<ReviewDeleteModal review={review} spotId={spot.id} />}
-                  />
+                  <button className='reviews_button'>
+                    <OpenModalMenuItem
+                      itemText='Delete'
+                      modalComponent={<ReviewDeleteModal review={review} spotId={spot.id} />}
+                    />
+                  </button>
                 </div>
               )}
             </div>
