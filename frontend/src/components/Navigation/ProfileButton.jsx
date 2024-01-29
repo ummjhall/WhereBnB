@@ -69,7 +69,7 @@ function ProfileButton({ user }) {
               <OpenModalMenuItem
                 itemText='Log In'
                 onItemClick={closeMenu}
-                modalComponent={<LoginFormModal />}
+                modalComponent={<LoginFormModal navigateHome={() => navigate('/')} />}
               />
             </div>
             <div className='profile-dropdown_signup hover-link'>
