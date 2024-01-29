@@ -206,8 +206,8 @@ function SpotForm({ type }) {
         {/* *** Section 4 *** */}
         <h2>Set a base price for your spot</h2>
         <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
-        <div>
-          <span>$ </span>
+        <div className='spot-form_price-container'>
+          <span>$</span>
           <span>
             <input
               className='spot-form_price'

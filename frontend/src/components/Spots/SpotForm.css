@@ -39,8 +39,14 @@
   height: 8em;
 }
 
+.spot-form_price-container {
+  display: flex;
+  align-items: center;
+}
+
 .spot-form_price {
-  display: inline-block;
+  /* display: inline-block; */
+  margin-left: 5px;
 }
 
 .spot-form_submit-wrapper {
