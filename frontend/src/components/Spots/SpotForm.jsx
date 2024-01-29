@@ -13,7 +13,8 @@ function SpotForm({ type }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getSpotDetails(spotId));
+    if (spot)
+      dispatch(getSpotDetails(spotId));
   }, [dispatch, spotId]);
 
   const [ country, setCountry ] = useState(spot?.country || '');
