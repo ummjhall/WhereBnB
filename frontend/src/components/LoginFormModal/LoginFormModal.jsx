@@ -4,7 +4,7 @@ import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
 import './LoginForm.css';
 
-function LoginFormModal() {
+function LoginFormModal({ navigateHome }) {
   const dispatch = useDispatch();
   const [ credential, setCredential ] = useState('');
   const [ password, setPassword ] = useState('');
@@ -15,6 +15,7 @@ function LoginFormModal() {
   const login = (credentials) => {
     dispatch(sessionActions.login(credentials))
       .then(closeModal)
+      .then(navigateHome)
       .catch(async (res) => {
         const data = await res.json();
         if (data?.errors) setErrors(data.errors);

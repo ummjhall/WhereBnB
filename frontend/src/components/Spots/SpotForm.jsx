@@ -15,7 +15,7 @@ function SpotForm({ type }) {
   useEffect(() => {
     if (spot)
       dispatch(getSpotDetails(spotId));
-  }, [dispatch, spotId]);
+  }, [dispatch, spot, spotId]);
 
   const [ country, setCountry ] = useState(spot?.country || '');
   const [ address, setAddress ] = useState(spot?.address || '');
